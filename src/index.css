@@ -394,20 +394,16 @@
 	}
 
 		.property-gallery {
-			@apply mb-20 grid gap-4 overflow-hidden rounded-3xl md:grid-cols-[2fr_1fr_1fr] md:grid-rows-2 md:h-[min(600px,70vw)];
+			@apply mb-20 grid gap-4 overflow-hidden rounded-3xl md:grid-cols-[2fr_1fr] md:h-[min(600px,70vw)];
+		}
+
+		.property-gallery-side {
+			@apply grid grid-rows-2 gap-4;
 		}
 
 		.property-gallery-item,
 		.property-gallery-hero {
-			@apply relative overflow-hidden;
-		}
-
-		.property-gallery-hero {
-			@apply md:col-span-1 md:row-span-2 max-md:aspect-[4/3];
-		}
-
-		.property-gallery-item {
-			@apply max-md:aspect-[4/3];
+			@apply relative overflow-hidden max-md:aspect-[4/3];
 		}
 
 		.property-gallery-image {

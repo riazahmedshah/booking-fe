@@ -3,32 +3,6 @@ export interface PropertyImage {
   alt: string
 }
 
-export interface PropertyHost {
-  name: string
-  description: string
-  yearsHosting: string
-  avatar: PropertyImage
-}
-
-// export interface Property {
-//   id: string
-//   title: string
-//   subtitle: string
-//   location?: string
-//   dates?: string
-//   rating?: number
-//   price: number
-//   image?: PropertyImage
-//   images?: PropertyImage[]
-//   imageUrls: string[]
-//   reviewsCount?: number
-//   description?: string
-//   amenities?: string[]
-//   host?: PropertyHost
-//   guestSummary?: string
-//   capacity?: string
-// }
-
 export interface Property {
 	id: string;
 	title: string;
@@ -40,6 +14,32 @@ export interface Property {
 	createdAt: string;
 	updatedAt: string;
 }
+
+export interface PropertyHost {
+	id: string
+	name: string
+}
+
+export interface PropertyAddress {
+	country: string
+	state: string
+	pincode: string
+	city: string
+	area: string
+}
+
+export interface PropertyDetail {
+	id: string
+	title: string
+	subTitle: string
+	price: number
+	maxGuests: number
+	images: string[]
+	host: PropertyHost
+	address: PropertyAddress
+}
+
+
 
 export interface Category {
   id: string

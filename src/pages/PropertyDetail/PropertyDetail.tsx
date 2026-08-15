@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { fetchPropertyById } from '../../apis/properties'
-import type { Property } from '../../apis/types'
+import type { PropertyDetail as PropertyDetailType } from '../../apis/types'
 import { AmenitiesList } from '../../components/AmenitiesList/AmenitiesList'
 import { BookingCard } from '../../components/BookingCard/BookingCard'
 import { Footer } from '../../components/Footer/Footer'
@@ -27,9 +27,14 @@ const defaultSelection = {
   to: new Date(2024, 9, 17),
 }
 
+const placeholderAvatar = 'https://api.dicebear.com/9.x/initials/svg?seed=Host'
+const placeholderDescription =
+  'This host is committed to providing a great stay for every guest, with quick responses and thoughtful touches throughout your visit.'
+const placeholderAmenities = ['Wifi', 'Kitchen', 'Free parking', 'Dedicated workspace']
+
 export function PropertyDetail() {
   const { id = '' } = useParams()
-  const [property, setProperty] = useState<Property | null>(null)
+  const [property, setProperty] = useState<PropertyDetailType | null>(null)
 
   useEffect(() => {
     let isMounted = true
@@ -60,9 +65,7 @@ export function PropertyDetail() {
     )
   }
 
-  const galleryImages = property.images?.map((image) => image.src) ?? [property.image.src]
-  const amenities = property.amenities ?? []
-  const host = property.host
+  const locationLabel = `${property.address.area}, ${property.address.city}`
 
   return (
     <div className="property-detail-page">
@@ -73,18 +76,17 @@ export function PropertyDetail() {
           <h1 className="property-detail-title">{property.title}</h1>
           <div className="property-detail-meta-row">
             <div className="property-detail-meta-group">
-              <span className="property-detail-meta-item property-detail-rating">
-                <span className="property-detail-rating-icon material-symbols-outlined" aria-hidden="true">
-                  star
-                </span>
-                {property.rating.toFixed(2)}
-              </span>
-              <span>{property.reviewsCount ?? 0} reviews</span>
               <span className="property-detail-meta-item">
                 <span className="property-detail-location-icon material-symbols-outlined" aria-hidden="true">
                   location_on
                 </span>
-                {property.location}
+                {locationLabel}
+              </span>
+              <span className="property-detail-meta-item">
+                <span className="property-detail-location-icon material-symbols-outlined" aria-hidden="true">
+                  group
+                </span>
+                {property.maxGuests} guests
               </span>
             </div>
 
@@ -105,43 +107,35 @@ export function PropertyDetail() {
           </div>
         </section>
 
-        <PhotoGallery images={galleryImages} />
+        <PhotoGallery id={property.id} images={property.images} />
 
         <section className="property-detail-content-grid">
           <div className="property-detail-left-column">
             <div className="property-detail-summary">
-              <h2 className="property-detail-section-title">{property.capacity ?? 'Entire cabin hosted by Sarah'}</h2>
-              <p className="property-detail-capacity">
-                {property.guestSummary ?? '4 guests · 2 bedrooms · 3 beds · 1.5 baths'}
-              </p>
+              <h2 className="property-detail-section-title">
+                Entire place hosted by {property.host.name}
+              </h2>
+              <p className="property-detail-capacity">{property.maxGuests} guests</p>
             </div>
 
-            {host ? (
-              <div className="property-detail-host-card">
-                <div className="property-detail-avatar-wrap">
-                  <img className="property-detail-avatar" src={host.avatar.src} alt={host.avatar.alt} />
-                </div>
-                <div>
-                  <h3 className="property-detail-host-title">{host.name} is a Superhost</h3>
-                  <p className="property-detail-host-text">{host.description}</p>
-                  <p className="property-detail-host-years">{host.yearsHosting}</p>
-                </div>
+            <div className="property-detail-host-card">
+              <div className="property-detail-avatar-wrap">
+                <img className="property-detail-avatar" src={placeholderAvatar} alt={property.host.name} />
               </div>
-            ) : null}
+              <div>
+                <h3 className="property-detail-host-title">{property.host.name} is your host</h3>
+                <p className="property-detail-host-text">{placeholderDescription}</p>
+              </div>
+            </div>
 
-            <p className="property-detail-description">{property.description}</p>
+            <p className="property-detail-description">{property.subTitle}</p>
 
-            {amenities.length > 0 ? <AmenitiesList amenities={amenities} /> : null}
-
-            <button type="button" className="property-detail-amenities-button">
-              Show all 42 amenities
-            </button>
+            <AmenitiesList amenities={placeholderAmenities} />
           </div>
 
           <div className="property-detail-right-column">
             <BookingCard
               price={property.price}
-              rating={property.rating}
               unavailableDates={unavailableDates}
               defaultRange={defaultSelection}
             />

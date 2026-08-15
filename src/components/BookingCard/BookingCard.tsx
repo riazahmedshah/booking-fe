@@ -4,7 +4,6 @@ import 'react-day-picker/style.css'
 
 interface BookingCardProps {
   price: number
-  rating: number
   unavailableDates: Date[]
   defaultRange?: DateRange
 }
@@ -30,7 +29,6 @@ function getNightCount(range?: DateRange) {
 
 export function BookingCard({
   price,
-  rating,
   unavailableDates,
   defaultRange,
 }: BookingCardProps) {
@@ -50,16 +48,8 @@ export function BookingCard({
   return (
     <aside className="booking-card" aria-label="Booking summary">
       <div className="booking-card-price-row">
-        <div>
-          <span className="booking-card-price">{formatCurrency(price)}</span>
-          <span className="booking-card-per-night"> / night</span>
-        </div>
-        <div className="booking-card-rating" aria-label={`Rating ${rating.toFixed(2)} out of 5`}>
-          <span className="booking-card-rating-icon material-symbols-outlined" aria-hidden="true">
-            star
-          </span>
-          <span>{rating.toFixed(2)}</span>
-        </div>
+        <span className="booking-card-price">{formatCurrency(price)}</span>
+        <span className="booking-card-per-night"> / night</span>
       </div>
 
       <div className="booking-calendar">
