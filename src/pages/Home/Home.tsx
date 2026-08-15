@@ -5,9 +5,8 @@ import type { Category, Property } from '../../apis/types'
 import { CategoryFilter } from '../../components/CategoryFilter/CategoryFilter'
 import { Footer } from '../../components/Footer/Footer'
 import { Header } from '../../components/Header/Header'
-import { Hero } from '../../components/Hero/Hero'
 import { PropertyGrid } from '../../components/PropertyGrid/PropertyGrid'
-import { SearchBar } from '../../components/SearchBar/SearchBar'
+import { Banner } from '../../components/Banner/Banner'
 
 export function Home() {
   const [properties, setProperties] = useState<Property[]>([])
@@ -48,8 +47,7 @@ export function Home() {
     <div className="home-page">
       <Header />
       <main>
-        <Hero />
-        <SearchBar />
+        <Banner />
         {!isLoading && <CategoryFilter categories={categories} />}
         {isLoading ? (
           <div className="home-loading">Loading serene stays...</div>

@@ -88,11 +88,15 @@
 	}
 
 	.site-header-inner {
-		@apply mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-6 px-5 md:px-16;
+		@apply mx-auto flex min-h-20 max-w-screen-2xl items-center justify-between gap-6 px-6 md:px-20;
 	}
 
 	.site-logo {
-		@apply text-[1.5rem] font-extrabold tracking-[-0.04em] text-primary font-heading;
+		@apply flex items-center gap-0.5 text-[1.75rem] font-extrabold tracking-[-0.05em] text-primary font-heading;
+	}
+	.site-logo-icon {
+		@apply text-6xl ;
+		font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 40;
 	}
 
 	.site-nav {
@@ -100,7 +104,7 @@
 	}
 
 	.site-nav-link {
-		@apply text-[0.9375rem] font-semibold text-text-variant transition-colors duration-200 hover:text-primary;
+		@apply text-base font-semibold text-text-variant transition-colors duration-200 hover:text-primary;
 	}
 
 	.site-nav-link-active {
@@ -116,11 +120,11 @@
 	}
 
 	.page-hero-title {
-		@apply m-0 text-[clamp(2.75rem,6vw,4rem)] font-heading font-extrabold tracking-[-0.04em] text-text leading-[1.08];
+		@apply m-0 text-[clamp(2.75rem,6vw,4rem)] font-heading font-extrabold tracking-[-0.04em] text-on-primary leading-[1.08];
 	}
 
 	.page-hero-subtitle {
-		@apply mx-auto mt-4 max-w-2xl text-[1.125rem] leading-[1.65] text-text-variant;
+		@apply mx-auto mt-4 max-w-2xl text-[1.125rem] leading-[1.65] text-on-primary/80;
 	}
 
 	.page-search {
@@ -128,7 +132,7 @@
 	}
 
 	.search-card {
-		@apply flex items-stretch gap-3 rounded-[28px] border border-outline-variant/35 bg-surface p-2 shadow-[0_12px_32px_rgba(91,124,89,0.08)] max-md:flex-col;
+		@apply flex items-stretch gap-3 rounded-[24px] border border-outline-variant/35 bg-surface p-1.5 shadow-[0_12px_32px_rgba(91,124,89,0.08)] max-md:flex-col;
 	}
 
 	.search-fields {
@@ -137,16 +141,16 @@
 
 	.search-field,
 	.search-field-button {
-		@apply flex flex-col gap-2 rounded-[20px] border-0 bg-transparent px-5 py-4 text-left transition-colors duration-200 hover:bg-surface-low;
+		@apply flex flex-col gap-1 rounded-[20px] border-0 bg-transparent px-5 py-3 text-left transition-colors duration-200 hover:bg-surface-low;
 	}
 
 	.search-field-label {
-		@apply text-[0.75rem] font-bold uppercase tracking-[0.12em] text-text-variant;
+		@apply text-base font-bold uppercase tracking-[0.12em] text-text;
 	}
 
 	.search-field-input,
 	.search-field-value {
-		@apply text-base font-semibold text-text;
+		@apply text-[0.75rem] font-semibold text-text-variant;
 	}
 
 	.search-field-input {
@@ -154,7 +158,7 @@
 	}
 
 	.search-submit {
-		@apply inline-flex h-14 w-full min-w-14 items-center justify-center rounded-[20px] bg-primary text-surface shadow-[0_12px_20px_rgba(67,99,66,0.18)] transition-colors duration-200 hover:bg-primary-hover active:scale-[0.98] md:w-14;
+		@apply inline-flex h-12 w-full min-w-16 items-center justify-center rounded-[18px] bg-primary text-surface shadow-[0_12px_20px_rgba(67,99,66,0.18)] transition-colors duration-200 hover:bg-primary-hover active:scale-[0.98]  md:h-auto md:w-14 md:self-stretch;
 	}
 
 	.category-filter {
@@ -811,6 +815,10 @@
 
 		.home-page {
 			@apply min-h-screen bg-background text-text;
+		}
+
+		.page-banner {
+			@apply w-full py-14 bg-gradient-to-b from-primary to-primary-hover;
 		}
 
 		.home-loading {

@@ -5,6 +5,7 @@ export function Header() {
     <header className="site-header">
       <div className="site-header-inner">
         <Link className="site-logo" to="/" aria-label="stayz home">
+          <span className="material-symbols-outlined text-primary site-logo-icon">cottage</span>
           stayz
         </Link>
 
