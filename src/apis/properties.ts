@@ -1,105 +1,118 @@
 import type { Property } from './types'
 
-const properties: Property[] = [
-  {
-    id: 'whispering-pines-a-frame',
-    title: 'Whispering Pines A-Frame',
-    location: 'Lake Tahoe, California',
-    dates: 'Oct 12 – 17',
-    rating: 4.92,
-    price: 340,
-    image: {
-      src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB2Xt2p8EMzkiOGVDzvG_dlYyznRO26vx1JeSMn6gBEKyuGuGFiZRNxe5EP5EZGieEx859Pt3Chj08twmVLUQqI3oQqLByIKHQcn6NjJGgwWitM_Sv1L-kGKcj4HQwGIdyUwJulrHHrzmnRUsnggczjGRvD8Ym8orTvxbm2fwBw_EZIanfSL0eHbqPmQ9aZRpzpRpopmzNiVg0eUeDoXVcE4yX3C5anl7ZQtnJ7eAwH_KEsBCpCd1IO3g',
-      alt: 'A cinematic, high-resolution photograph of a modern A-frame cabin nestled in a misty evergreen forest. The architectural design features large glass windows reflecting the soft morning light. The color palette is dominated by deep forest greens, warm cedar wood tones, and cool grays, creating a serene and premium atmosphere for stayz. The lighting is ethereal and diffused, emphasizing a peaceful retreat.',
-    },
-  },
-  {
-    id: 'azure-horizon-villa',
-    title: 'Azure Horizon Villa',
-    location: 'Santorini, Greece',
-    dates: 'Nov 5 – 10',
-    rating: 4.88,
-    price: 520,
-    image: {
-      src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBSGj8DWFfLrtmngUY3VQ2Bt-Vz6LUAgkJCLa2g7CBaQNu2ntnQBBZcIV_kJeAe1ZU-6-96tPqctb49ZO1mReGJTmLx3bBkKCLI_xfuUojSVDJ03YfCcjoTJKhvHZd9iutY8WmfdQ1HU_dNP8tYpfWcY33GXkX33aQM6MxnAdg6Ev5NHPhH61evEdvOWAmM9aU4wnR_KwcRn-4_xQimTwmCMt8iDAgMX8ZjrmIPpGDylYDxKybs-Nxdog',
-      alt: 'A minimalist architectural villa located on a rugged coastline overlooking the turquoise Mediterranean Sea. The building features clean white lines, natural stone accents, and an infinity pool that blends into the horizon. The lighting is vibrant golden hour sunlight, highlighting the luxurious textures and serene mood of this stayz property. High-end property photography style with balanced compositions.',
-    },
-  },
-  {
-    id: 'glass-canopy-treehouse',
-    title: 'Glass Canopy Treehouse',
-    location: 'Ubud, Bali',
-    dates: 'Dec 1 – 8',
-    rating: 4.95,
-    price: 210,
-    image: {
-      src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA3FesNa2lhcVivLtQlmynxo8gxzA4DECNhIVPaImp1HzB4zWko0lODcGI9MqeFh8ZTRzMfK0qXnaozuR18WiCX5gP-S-vhASvEgMlz7D0jFfLqDSzQZ4tlVMltIR0Ehn_bPUGsTuPPE76wN9Dxx2WYpKM0l16ia7gQ7rTt1D-cFkUxmuooRaqdGeOYiEuSrdTR6JM58uF8O3PGs_dMiX9YwcZnySbtERE1_MghD38bNG_iVoCdE7KqQw',
-      alt: 'A luxurious glass treehouse elevated within a lush tropical rainforest canopy. The structure is built with dark bamboo and floor-to-ceiling glass, offering a panoramic view of the jungle. Interior lights glow warmly against the twilight blue sky. The aesthetic is modern-organic, capturing the essence of a serene stayz getaway with sophisticated lighting and deep tropical green tones.',
-    },
-  },
-  {
-    id: 'elderberry-cottage',
-    title: 'Elderberry Cottage',
-    location: 'Cotswolds, UK',
-    dates: 'Sep 28 – Oct 3',
-    rating: 4.85,
-    price: 185,
-    image: {
-      src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBF8CyUb1KPAt324vnA0kpol8xvrs4j3ZRhJd7gROHT4fCLkSXlP0mlHDjUsVvx_3_ACqfFpvIAI3Qd3FoHoTFn7YTOUgXFCsoTikXvVriu2b7ob2Rj2pkqr87tSorPJpglKhqzGt7HMmE-z3I7TT-7PCN7uoYHMgpkTDscwEJw6R6O3aFsM6ckFSUDVtbgjcAqJgercDVB5HqzP3VcWcbk6mmARqkgP4Rh64HiHr06YE8m2d6qS1rGmA',
-      alt: 'A charming stone cottage in the rolling hills of the English countryside. The garden is filled with wildflowers and a rustic wooden fence. Soft, warm sunlight filters through the trees, casting gentle shadows. The mood is cozy, historical, and deeply peaceful, perfectly aligned with the stayz brand identity of providing curated sanctuaries. High-quality editorial travel photography style.',
-    },
-  },
-  {
-    id: 'lunar-peak-sanctuary',
-    title: 'Lunar Peak Sanctuary',
-    location: 'Joshua Tree, USA',
-    dates: 'Oct 20 – 25',
-    rating: 4.98,
-    price: 450,
-    image: {
-      src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCjV0MdzTqhM2BNjIhFU8TzjI6xyrP7QLhGiNWhTWbKUSv2RF5O2_-shGb5SHkbrvhyr5fBmnVVUoCKriEq5od6F-_h_ob0WZ2Gmzoq2KjDH5Q-IBUDYXwTsVIdO0F8CvszSOPhSPDcORpzU-MqifTbF5MIMNAEKg-QwLZkYJkERPWNqxDABQ01irt4kLXjrgb0hutlfMnTR9_bgCzgy0AxIegh4dqNV1qtTTj-cyJu03cY2SGmXL-t9g',
-      alt: 'A high-end desert retreat with minimalist geometric architecture, situated among dramatic rock formations under a clear starry night sky. The property features a central fire pit and sunken seating area. The lighting is a mix of warm artificial glows and cool moonlight. The aesthetic is futuristic yet grounded, emphasizing the premium sanctuary experience of stayz. Ultra-detailed, clean lines.',
-    },
-  },
-  {
-    id: 'mirror-lake-float',
-    title: 'Mirror Lake Float',
-    location: 'Lake District, Chile',
-    dates: 'Nov 12 – 18',
-    rating: 4.9,
-    price: 295,
-    image: {
-      src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCL5i23IsJj2Gt3FSzwrMVulUs3Xe1b2pibWg82_5FmyVOKRNxymP0oxcDcSHIlhENcV4uaWMsgZ8vOhTMnNVs7HapZ56YeMwkG009ElePkd_IGfncI8zOq7488ja85OFqkPPvmQOZkIJL0VYsO_SJhQXQrFUwFbqhlCacxb1d7IVOmcv8vlFzJnnq6pU12VOjfgHIMbWSB1eIGNKT0vCAf__J6vFzCjMEsuBDv7zP-p6izvzaXJWoI9A',
-      alt: 'A modern floating house on a serene, mirror-like lake surrounded by autumn-colored mountains. The house is constructed with sustainable light wood and features large observation decks. The scene is peaceful with ripples in the water. Soft afternoon lighting highlights the vibrant oranges and yellows of the foliage. Premium travel photography for stayz, showcasing a unique and tranquil accommodation.',
-    },
-  },
-  {
-    id: 'summit-ridge-lodge',
-    title: 'Summit Ridge Lodge',
-    location: 'Aspen, Colorado',
-    dates: 'Dec 22 – 28',
-    rating: 4.97,
-    price: 890,
-    image: {
-      src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD9NXPw5S2rVXhEVpJ7Bb0CvnCLOQAR64zfUVgS_g5AUQrgT0dt8lXNHZ_CzlSW42xUxPF-BVKd562vVXIkE4JoBLeco4Xl7pfqMWHZ61i5jPXDV27c1R_i4SvjDGeBe1z2qsBOWhjaoivsR-iudqjwcPIkmCQmiPx3u0aMuhvRw2CCrTCwJ-p9rCs_LYyMEtAyr2cCESogQ2CT6uL1mffMlIw7Sn7t32VW2WytYcyEFuwAiXw3VsNq5A',
-      alt: 'A high-altitude mountain lodge with a rustic-modern design, featuring heavy timber beams and massive stone fireplaces. Outside, a light snowfall coats the surrounding pine trees. The interior is visible through large windows, radiating warmth and comfort. The composition is wide and inviting, capturing the premium winter sanctuary feel of stayz. Cold blue exterior tones vs warm orange interior glows.',
-    },
-  },
-  {
-    id: 'savanna-silk-tents',
-    title: 'Savanna Silk Tents',
-    location: 'Maasai Mara, Kenya',
-    dates: 'Oct 5 – 12',
-    rating: 4.99,
-    price: 610,
-    image: {
-      src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDXObZODYUAcS-0Hnev6rIVSuAcZa4HVLszSOzJGCCEFkny0vySJy-XotNyaxjQgzyQEJeHwquP4gvxG1jCpgGQpwe2SUtqwzRXB5ql3juEBDpKl9c0qPehwhoJulfySGJRGAcCXd4UJ3OeXV6HcBCm95WOtCvyl1FELWcdfT96BSUragjCphdmdGBfab6AnplbNAlHFGocHOFY7OgywiUQEofaPc5K49SFPupYl87X2t5fk4iP86DHCA',
-      alt: 'An eco-conscious safari tent on a private reserve in Africa, overlooking a vast savanna at sunset. The tent is elegantly furnished with neutral linens and wooden furniture. The sky is a dramatic gradient of purple and gold. The overall mood is adventurous yet incredibly comfortable and exclusive. High-end lifestyle photography for stayz, emphasizing unique nature-connected experiences.',
-    },
-  },
-]
 
-const propertyDetail: Property = {
+// const properties: Property[] = [
+//   {
+//     id: 'whispering-pines-a-frame',
+//     title: 'Whispering Pines A-Frame',
+//     location: 'Lake Tahoe, California',
+//     dates: 'Oct 12 – 17',
+//     rating: 4.92,
+//     price: 340,
+//     image: {
+//       src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB2Xt2p8EMzkiOGVDzvG_dlYyznRO26vx1JeSMn6gBEKyuGuGFiZRNxe5EP5EZGieEx859Pt3Chj08twmVLUQqI3oQqLByIKHQcn6NjJGgwWitM_Sv1L-kGKcj4HQwGIdyUwJulrHHrzmnRUsnggczjGRvD8Ym8orTvxbm2fwBw_EZIanfSL0eHbqPmQ9aZRpzpRpopmzNiVg0eUeDoXVcE4yX3C5anl7ZQtnJ7eAwH_KEsBCpCd1IO3g',
+//       alt: 'A cinematic, high-resolution photograph of a modern A-frame cabin nestled in a misty evergreen forest. The architectural design features large glass windows reflecting the soft morning light. The color palette is dominated by deep forest greens, warm cedar wood tones, and cool grays, creating a serene and premium atmosphere for stayz. The lighting is ethereal and diffused, emphasizing a peaceful retreat.',
+//     },
+//   },
+//   {
+//     id: 'azure-horizon-villa',
+//     title: 'Azure Horizon Villa',
+//     location: 'Santorini, Greece',
+//     dates: 'Nov 5 – 10',
+//     rating: 4.88,
+//     price: 520,
+//     image: {
+//       src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBSGj8DWFfLrtmngUY3VQ2Bt-Vz6LUAgkJCLa2g7CBaQNu2ntnQBBZcIV_kJeAe1ZU-6-96tPqctb49ZO1mReGJTmLx3bBkKCLI_xfuUojSVDJ03YfCcjoTJKhvHZd9iutY8WmfdQ1HU_dNP8tYpfWcY33GXkX33aQM6MxnAdg6Ev5NHPhH61evEdvOWAmM9aU4wnR_KwcRn-4_xQimTwmCMt8iDAgMX8ZjrmIPpGDylYDxKybs-Nxdog',
+//       alt: 'A minimalist architectural villa located on a rugged coastline overlooking the turquoise Mediterranean Sea. The building features clean white lines, natural stone accents, and an infinity pool that blends into the horizon. The lighting is vibrant golden hour sunlight, highlighting the luxurious textures and serene mood of this stayz property. High-end property photography style with balanced compositions.',
+//     },
+//   },
+//   {
+//     id: 'glass-canopy-treehouse',
+//     title: 'Glass Canopy Treehouse',
+//     location: 'Ubud, Bali',
+//     dates: 'Dec 1 – 8',
+//     rating: 4.95,
+//     price: 210,
+//     image: {
+//       src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA3FesNa2lhcVivLtQlmynxo8gxzA4DECNhIVPaImp1HzB4zWko0lODcGI9MqeFh8ZTRzMfK0qXnaozuR18WiCX5gP-S-vhASvEgMlz7D0jFfLqDSzQZ4tlVMltIR0Ehn_bPUGsTuPPE76wN9Dxx2WYpKM0l16ia7gQ7rTt1D-cFkUxmuooRaqdGeOYiEuSrdTR6JM58uF8O3PGs_dMiX9YwcZnySbtERE1_MghD38bNG_iVoCdE7KqQw',
+//       alt: 'A luxurious glass treehouse elevated within a lush tropical rainforest canopy. The structure is built with dark bamboo and floor-to-ceiling glass, offering a panoramic view of the jungle. Interior lights glow warmly against the twilight blue sky. The aesthetic is modern-organic, capturing the essence of a serene stayz getaway with sophisticated lighting and deep tropical green tones.',
+//     },
+//   },
+//   {
+//     id: 'elderberry-cottage',
+//     title: 'Elderberry Cottage',
+//     location: 'Cotswolds, UK',
+//     dates: 'Sep 28 – Oct 3',
+//     rating: 4.85,
+//     price: 185,
+//     image: {
+//       src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBF8CyUb1KPAt324vnA0kpol8xvrs4j3ZRhJd7gROHT4fCLkSXlP0mlHDjUsVvx_3_ACqfFpvIAI3Qd3FoHoTFn7YTOUgXFCsoTikXvVriu2b7ob2Rj2pkqr87tSorPJpglKhqzGt7HMmE-z3I7TT-7PCN7uoYHMgpkTDscwEJw6R6O3aFsM6ckFSUDVtbgjcAqJgercDVB5HqzP3VcWcbk6mmARqkgP4Rh64HiHr06YE8m2d6qS1rGmA',
+//       alt: 'A charming stone cottage in the rolling hills of the English countryside. The garden is filled with wildflowers and a rustic wooden fence. Soft, warm sunlight filters through the trees, casting gentle shadows. The mood is cozy, historical, and deeply peaceful, perfectly aligned with the stayz brand identity of providing curated sanctuaries. High-quality editorial travel photography style.',
+//     },
+//   },
+//   {
+//     id: 'lunar-peak-sanctuary',
+//     title: 'Lunar Peak Sanctuary',
+//     location: 'Joshua Tree, USA',
+//     dates: 'Oct 20 – 25',
+//     rating: 4.98,
+//     price: 450,
+//     image: {
+//       src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCjV0MdzTqhM2BNjIhFU8TzjI6xyrP7QLhGiNWhTWbKUSv2RF5O2_-shGb5SHkbrvhyr5fBmnVVUoCKriEq5od6F-_h_ob0WZ2Gmzoq2KjDH5Q-IBUDYXwTsVIdO0F8CvszSOPhSPDcORpzU-MqifTbF5MIMNAEKg-QwLZkYJkERPWNqxDABQ01irt4kLXjrgb0hutlfMnTR9_bgCzgy0AxIegh4dqNV1qtTTj-cyJu03cY2SGmXL-t9g',
+//       alt: 'A high-end desert retreat with minimalist geometric architecture, situated among dramatic rock formations under a clear starry night sky. The property features a central fire pit and sunken seating area. The lighting is a mix of warm artificial glows and cool moonlight. The aesthetic is futuristic yet grounded, emphasizing the premium sanctuary experience of stayz. Ultra-detailed, clean lines.',
+//     },
+//   },
+//   {
+//     id: 'mirror-lake-float',
+//     title: 'Mirror Lake Float',
+//     location: 'Lake District, Chile',
+//     dates: 'Nov 12 – 18',
+//     rating: 4.9,
+//     price: 295,
+//     image: {
+//       src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCL5i23IsJj2Gt3FSzwrMVulUs3Xe1b2pibWg82_5FmyVOKRNxymP0oxcDcSHIlhENcV4uaWMsgZ8vOhTMnNVs7HapZ56YeMwkG009ElePkd_IGfncI8zOq7488ja85OFqkPPvmQOZkIJL0VYsO_SJhQXQrFUwFbqhlCacxb1d7IVOmcv8vlFzJnnq6pU12VOjfgHIMbWSB1eIGNKT0vCAf__J6vFzCjMEsuBDv7zP-p6izvzaXJWoI9A',
+//       alt: 'A modern floating house on a serene, mirror-like lake surrounded by autumn-colored mountains. The house is constructed with sustainable light wood and features large observation decks. The scene is peaceful with ripples in the water. Soft afternoon lighting highlights the vibrant oranges and yellows of the foliage. Premium travel photography for stayz, showcasing a unique and tranquil accommodation.',
+//     },
+//   },
+//   {
+//     id: 'summit-ridge-lodge',
+//     title: 'Summit Ridge Lodge',
+//     location: 'Aspen, Colorado',
+//     dates: 'Dec 22 – 28',
+//     rating: 4.97,
+//     price: 890,
+//     image: {
+//       src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD9NXPw5S2rVXhEVpJ7Bb0CvnCLOQAR64zfUVgS_g5AUQrgT0dt8lXNHZ_CzlSW42xUxPF-BVKd562vVXIkE4JoBLeco4Xl7pfqMWHZ61i5jPXDV27c1R_i4SvjDGeBe1z2qsBOWhjaoivsR-iudqjwcPIkmCQmiPx3u0aMuhvRw2CCrTCwJ-p9rCs_LYyMEtAyr2cCESogQ2CT6uL1mffMlIw7Sn7t32VW2WytYcyEFuwAiXw3VsNq5A',
+//       alt: 'A high-altitude mountain lodge with a rustic-modern design, featuring heavy timber beams and massive stone fireplaces. Outside, a light snowfall coats the surrounding pine trees. The interior is visible through large windows, radiating warmth and comfort. The composition is wide and inviting, capturing the premium winter sanctuary feel of stayz. Cold blue exterior tones vs warm orange interior glows.',
+//     },
+//   },
+//   {
+//     id: 'savanna-silk-tents',
+//     title: 'Savanna Silk Tents',
+//     location: 'Maasai Mara, Kenya',
+//     dates: 'Oct 5 – 12',
+//     rating: 4.99,
+//     price: 610,
+//     image: {
+//       src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDXObZODYUAcS-0Hnev6rIVSuAcZa4HVLszSOzJGCCEFkny0vySJy-XotNyaxjQgzyQEJeHwquP4gvxG1jCpgGQpwe2SUtqwzRXB5ql3juEBDpKl9c0qPehwhoJulfySGJRGAcCXd4UJ3OeXV6HcBCm95WOtCvyl1FELWcdfT96BSUragjCphdmdGBfab6AnplbNAlHFGocHOFY7OgywiUQEofaPc5K49SFPupYl87X2t5fk4iP86DHCA',
+//       alt: 'An eco-conscious safari tent on a private reserve in Africa, overlooking a vast savanna at sunset. The tent is elegantly furnished with neutral linens and wooden furniture. The sky is a dramatic gradient of purple and gold. The overall mood is adventurous yet incredibly comfortable and exclusive. High-end lifestyle photography for stayz, emphasizing unique nature-connected experiences.',
+//     },
+//   },
+// ]
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+export async function fetchProperties(): Promise<Property[]> {
+	const response = await fetch(`${API_BASE_URL}/property`);
+
+	if (!response.ok) {
+		throw new Error(`Failed to fetch properties: ${response.status}`);
+	}
+
+	return response.json();
+}
+
+const propertyDetail: any = {
   id: 'misty-forest-sanctuary',
   title: 'Misty Forest Sanctuary: A-Frame Retreat',
   location: 'Lake Tahoe, California',
@@ -162,8 +175,4 @@ export function fetchPropertyById(id: string): Promise<Property> {
     ...propertyDetail,
     id,
   })
-}
-
-export function fetchProperties(): Promise<Property[]> {
-  return Promise.resolve(properties)
 }

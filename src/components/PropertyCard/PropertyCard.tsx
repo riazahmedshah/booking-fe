@@ -10,6 +10,8 @@ const priceFormatter = new Intl.NumberFormat('en-US', {
 })
 
 export function PropertyCard({ property }: PropertyCardProps) {
+  const coverImage = `${property.id}/${property.imageUrls[property.imageUrls.length - 1]}`
+
   return (
     <article className="property-card group">
       <div className="property-card-media">
@@ -18,7 +20,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
           to={`/property/${property.id}`}
           aria-label={`View ${property.title}`}
         >
-          <img className="property-card-image" src={property.image.src} alt={property.image.alt} />
+          <img className="property-card-image" src={coverImage} alt={property.title} />
         </Link>
 
         <button type="button" className="property-card-favorite" aria-label={`Save ${property.title}`}>
@@ -30,15 +32,14 @@ export function PropertyCard({ property }: PropertyCardProps) {
         <div className="property-card-body">
           <div>
             <h3 className="property-card-title">{property.title}</h3>
-            <p className="property-card-location">{property.location}</p>
-            <p className="property-card-dates">{property.dates}</p>
+            <p className="property-card-location">{property.subTitle}</p>
           </div>
 
-          <div className="property-card-rating" aria-label={`Rating ${property.rating.toFixed(2)} out of 5`}>
+          <div className="property-card-rating" aria-label={`Sleeps up to ${property.maxGuests} guests`}>
             <span className="property-card-star material-symbols-outlined" aria-hidden="true">
-              star
+              group
             </span>
-            <span>{property.rating.toFixed(2)}</span>
+            <span>{property.maxGuests}</span>
           </div>
         </div>
 
