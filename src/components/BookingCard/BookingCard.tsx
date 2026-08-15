@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { DayPicker, type DateRange } from 'react-day-picker'
 import 'react-day-picker/style.css'
 
 interface BookingCardProps {
   price: number
+  maxGuests: number
   unavailableDates: Date[]
   defaultRange?: DateRange
 }
@@ -11,7 +12,7 @@ interface BookingCardProps {
 function formatCurrency(value: number) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'INR',
     maximumFractionDigits: 0,
   }).format(value)
 }
@@ -27,13 +28,21 @@ function getNightCount(range?: DateRange) {
   )
 }
 
+const today = new Date()
+today.setHours(0, 0, 0, 0)
+
 export function BookingCard({
   price,
+  maxGuests,
   unavailableDates,
   defaultRange,
 }: BookingCardProps) {
   const [range, setRange] = useState<DateRange | undefined>(defaultRange)
-  const [guests, setGuests] = useState(2)
+  const [guests, setGuests] = useState(Math.min(2, maxGuests || 1))
+  
+  useEffect(() => {
+    setGuests((current) => Math.min(current, maxGuests || 1))
+  }, [maxGuests])
 
   const nights = getNightCount(range) || getNightCount(defaultRange) || 5
   const subtotal = price * nights
@@ -59,7 +68,7 @@ export function BookingCard({
           onSelect={setRange}
           defaultMonth={defaultMonth}
           numberOfMonths={1}
-          disabled={unavailableDates}
+          disabled={[{ before: today }, ...unavailableDates]}
           excludeDisabled
           showOutsideDays
         />
@@ -76,7 +85,7 @@ export function BookingCard({
               remove
             </span>
           </button>
-          <button className="booking-stepper-button" type="button" onClick={() => setGuests((current) => current + 1)}>
+          <button className="booking-stepper-button" type="button" onClick={() => setGuests((current) => current + 1)} disabled={guests >= maxGuests}>
             <span className="material-symbols-outlined" aria-hidden="true">
               add
             </span>

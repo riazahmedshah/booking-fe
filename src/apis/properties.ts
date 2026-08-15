@@ -1,4 +1,4 @@
-import type { Property, PropertyDetail } from './types'
+import type { AvailabilityMonth, Property, PropertyDetail } from './types'
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -18,6 +18,16 @@ export async function fetchPropertyById(id: string): Promise<PropertyDetail> {
 
 	if (!response.ok) {
 		throw new Error(`Failed to fetch property: ${response.status}`)
+	}
+
+	return response.json()
+}
+
+export async function fetchPropertyAvailability(id: string): Promise<AvailabilityMonth[]> {
+	const response = await fetch(`${API_BASE_URL}/property/${id}/availability`)
+
+	if (!response.ok) {
+		throw new Error(`Failed to fetch availability: ${response.status}`)
 	}
 
 	return response.json()

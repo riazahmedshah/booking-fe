@@ -48,6 +48,17 @@ export interface Category {
   active?: boolean
 }
 
+export interface AvailabilityDay {
+	calendarDate: string
+	available: boolean
+}
+
+export interface AvailabilityMonth {
+	month: number
+	year: number
+	days: AvailabilityDay[]
+}
+
 export interface Booking {
   id: string
   propertyTitle: string

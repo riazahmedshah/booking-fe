@@ -1,30 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { fetchPropertyById } from '../../apis/properties'
+import { fetchPropertyById, fetchPropertyAvailability } from '../../apis/properties'
 import type { PropertyDetail as PropertyDetailType } from '../../apis/types'
 import { AmenitiesList } from '../../components/AmenitiesList/AmenitiesList'
+import { getUnavailableDates } from '../../utils/availability'
 import { BookingCard } from '../../components/BookingCard/BookingCard'
 import { Footer } from '../../components/Footer/Footer'
 import { Header } from '../../components/Header/Header'
 import { PhotoGallery } from '../../components/PhotoGallery/PhotoGallery'
 
-const unavailableDates = [
-  new Date(2024, 9, 1),
-  new Date(2024, 9, 2),
-  new Date(2024, 9, 3),
-  new Date(2024, 9, 4),
-  new Date(2024, 9, 5),
-  new Date(2024, 9, 20),
-  new Date(2024, 9, 21),
-  new Date(2024, 9, 22),
-  new Date(2024, 9, 23),
-  new Date(2024, 9, 24),
-  new Date(2024, 9, 25),
-]
 
+
+const today = new Date()
 const defaultSelection = {
-  from: new Date(2024, 9, 12),
-  to: new Date(2024, 9, 17),
+  from: today,
+  to: today,
 }
 
 const placeholderAvatar = 'https://api.dicebear.com/9.x/initials/svg?seed=Host'
@@ -35,15 +25,19 @@ const placeholderAmenities = ['Wifi', 'Kitchen', 'Free parking', 'Dedicated work
 export function PropertyDetail() {
   const { id = '' } = useParams()
   const [property, setProperty] = useState<PropertyDetailType | null>(null)
+  const [unavailableDates, setUnavailableDates] = useState<Date[]>([])
 
   useEffect(() => {
     let isMounted = true
 
     async function loadProperty() {
-      const nextProperty = await fetchPropertyById(id)
-
+     const [nextProperty, availability] = await Promise.all([
+        fetchPropertyById(id),
+        fetchPropertyAvailability(id),
+      ])
       if (isMounted) {
         setProperty(nextProperty)
+        setUnavailableDates(getUnavailableDates(availability))
       }
     }
 
@@ -136,6 +130,7 @@ export function PropertyDetail() {
           <div className="property-detail-right-column">
             <BookingCard
               price={property.price}
+              maxGuests={property.maxGuests}
               unavailableDates={unavailableDates}
               defaultRange={defaultSelection}
             />
