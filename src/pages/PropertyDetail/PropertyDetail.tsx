@@ -129,6 +129,7 @@ export function PropertyDetail() {
 
           <div className="property-detail-right-column">
             <BookingCard
+              propertyId={property.id}
               price={property.price}
               maxGuests={property.maxGuests}
               unavailableDates={unavailableDates}

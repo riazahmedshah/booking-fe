@@ -435,6 +435,10 @@
 			@apply text-secondary;
 		}
 
+		.booking-error {
+			@apply mt-3 text-sm text-error;
+		}
+
 		.booking-summary {
 			@apply rounded-xl border border-outline-variant/50 bg-surface-low p-4;
 		}

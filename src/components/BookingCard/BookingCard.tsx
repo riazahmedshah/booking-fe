@@ -1,8 +1,11 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { DayPicker, type DateRange } from 'react-day-picker'
 import 'react-day-picker/style.css'
+import { createBooking } from '../../apis/booking'
 
 interface BookingCardProps {
+  propertyId: string
   price: number
   maxGuests: number
   unavailableDates: Date[]
@@ -12,9 +15,13 @@ interface BookingCardProps {
 function formatCurrency(value: number) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'INR',
+    currency: 'USD',
     maximumFractionDigits: 0,
   }).format(value)
+}
+
+function formatDateForApi(date: Date) {
+  return date.toISOString().split('T')[0]
 }
 
 function getNightCount(range?: DateRange) {
@@ -32,14 +39,18 @@ const today = new Date()
 today.setHours(0, 0, 0, 0)
 
 export function BookingCard({
+  propertyId,
   price,
   maxGuests,
   unavailableDates,
   defaultRange,
 }: BookingCardProps) {
+  const navigate = useNavigate()
   const [range, setRange] = useState<DateRange | undefined>(defaultRange)
-  const [guests, setGuests] = useState(Math.min(2, maxGuests || 1))
-  
+  const [guests, setGuests] = useState(() => Math.min(2, maxGuests || 1))
+  const [isBooking, setIsBooking] = useState(false)
+  const [bookingError, setBookingError] = useState<string | null>(null)
+
   useEffect(() => {
     setGuests((current) => Math.min(current, maxGuests || 1))
   }, [maxGuests])
@@ -53,6 +64,31 @@ export function BookingCard({
     () => defaultRange?.from ?? new Date(2024, 9, 1),
     [defaultRange],
   )
+
+  async function handleReserve() {
+    if (!range?.from || !range?.to) {
+      setBookingError('Please select check-in and check-out dates')
+      return
+    }
+
+    setIsBooking(true)
+    setBookingError(null)
+
+    try {
+      const {idempotency_key} = await createBooking ({
+        propertyId,
+        totalPrice: total,
+        checkIn: formatDateForApi(range.from),
+        checkOut: formatDateForApi(range.to),
+      })
+      navigate(`/payment/${idempotency_key}`, { state: { propertyId } })
+    } catch (error) {
+      setBookingError('Booking failed. Please try again.')
+      console.error(error)
+    } finally {
+      setIsBooking(false)
+    }
+  }
 
   return (
     <aside className="booking-card" aria-label="Booking summary">
@@ -80,12 +116,22 @@ export function BookingCard({
           <div className="booking-guest-value">{guests} guests</div>
         </div>
         <div className="booking-stepper">
-          <button className="booking-stepper-button" type="button" onClick={() => setGuests((current) => Math.max(1, current - 1))}>
+          <button
+            className="booking-stepper-button"
+            type="button"
+            onClick={() => setGuests((current) => Math.max(1, current - 1))}
+            disabled={guests <= 1}
+          >
             <span className="material-symbols-outlined" aria-hidden="true">
               remove
             </span>
           </button>
-          <button className="booking-stepper-button" type="button" onClick={() => setGuests((current) => current + 1)} disabled={guests >= maxGuests}>
+          <button
+            className="booking-stepper-button"
+            type="button"
+            onClick={() => setGuests((current) => Math.min(maxGuests, current + 1))}
+            disabled={guests >= maxGuests}
+          >
             <span className="material-symbols-outlined" aria-hidden="true">
               add
             </span>
@@ -93,9 +139,16 @@ export function BookingCard({
         </div>
       </div>
 
-      <button type="button" className="booking-reserve-button">
-        Reserve
+      <button
+        type="button"
+        className="booking-reserve-button"
+        onClick={handleReserve}
+        disabled={isBooking}
+      >
+        {isBooking ? 'Reserving...' : 'Reserve'}
       </button>
+
+      {bookingError ? <p className="booking-error">{bookingError}</p> : null}
 
       <div className="booking-breakdown">
         <div className="booking-breakdown-row">

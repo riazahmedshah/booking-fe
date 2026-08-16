@@ -1,27 +1,49 @@
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Footer } from '../../components/Footer/Footer'
 import { Header } from '../../components/Header/Header'
 import { BookingSummary } from '../../components/BookingSummary/BookingSummary'
-import type { Booking } from '../../apis/types'
+import type { ConfirmedBooking } from '../../apis/types'
+import { confirmBooking } from '../../apis/booking'
 
-// Placeholder booking data until the property detail page passes selected dates and guests here.
-const booking: Booking = {
-  id: 'misty-forest-sanctuary-booking',
-  propertyTitle: 'Misty Forest Sanctuary',
-  propertyThumbnail: {
-    src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBM9krFlXNkAaGSZNZoBnZac6D3gQMSRdMGU0AHKtYeaklMqW8WkJdv_8cVu3bDE9gSll-8D2gQnrJb1ecj_jJvuquHSFzZRUAE8Qu9r4k3YnKfYSWYKHJLzxaCt71w5aDQinfo4xdn5HuWCz3-0_RE5p8UG_q2gO7-mY_rl0RxjH5IjsUbZAIKjfQP0J9jXizpgZD_ju1q4GNwW8hnYWjZzRKzmCZzUiTmplDxNOuol767CxyDutNEGQ',
-    alt: 'A serene minimalist forest cabin nestled among towering pine trees shrouded in morning mist. Soft, diffused emerald green lighting, contemporary Scandinavian architecture with large glass windows, atmospheric and peaceful mood, ultra-high quality architectural photography.',
-  },
-  dates: 'Oct 12 - 17, 2024',
-  guests: 2,
-  totalAmount: 1945,
-}
+const TIMEOUT_SECONDS = 60
 
 export function Payment() {
+  const { key = '' } = useParams()
+  const location = useLocation()
   const navigate = useNavigate()
+  const propertyId = (location.state as { propertyId?: string } | null)?.propertyId
 
-  function handleConfirmBooking() {
-    navigate('/')
+  const [secondsLeft, setSecondsLeft] = useState(TIMEOUT_SECONDS)
+  const [isConfirming, setIsConfirming] = useState(false)
+  const [confirmError, setConfirmError] = useState<string | null>(null)
+  const [confirmedBooking, setConfirmedBooking] = useState<ConfirmedBooking | null>(null)
+
+  useEffect(() => {
+    if (confirmedBooking) return
+
+    if (secondsLeft <= 0) {
+      navigate(propertyId ? `/property/${propertyId}` : '/')
+      return
+    }
+
+    const timer = setTimeout(() => setSecondsLeft((s) => s - 1), 1000)
+    return () => clearTimeout(timer)
+  }, [secondsLeft, confirmedBooking, navigate, propertyId])
+
+  async function handleConfirmBooking() {
+    setIsConfirming(true)
+    setConfirmError(null)
+
+    try {
+      const booking = await confirmBooking(key)
+      setConfirmedBooking(booking)
+    } catch (error) {
+      setConfirmError('Could not confirm booking. Please try again.')
+      console.error(error)
+    } finally {
+      setIsConfirming(false)
+    }
   }
 
   return (
@@ -36,55 +58,80 @@ export function Payment() {
             </div>
 
             <div className="payment-card-inner">
-              <div className="payment-heading">
-                <span className="payment-heading-icon material-symbols-outlined" aria-hidden="true">
-                  check_circle
-                </span>
-                <h1 className="payment-title">Final Step</h1>
-                <p className="payment-subtitle">
-                  Please review your stay details for the Misty Forest Sanctuary.
-                </p>
-              </div>
-
-              <BookingSummary booking={booking} />
-
-              <section className="payment-support-card" aria-labelledby="support-title">
-                <div className="payment-support-icon-wrap">
-                  <span className="payment-support-icon material-symbols-outlined" aria-hidden="true">
-                    coffee
-                  </span>
-                </div>
-                <h2 id="support-title" className="payment-support-title">
-                  Support this project
-                </h2>
-                <p className="payment-support-text">
-                  This is a demo - no real payment is processed. If you&apos;d like to
-                  support this project, scan the code below.
-                </p>
-
-                <div className="payment-qr-wrap" aria-label="QR code placeholder">
-                  <div className="payment-qr-pattern" />
-                  <div className="payment-qr-overlay">
-                    <span className="payment-qr-label">SCAN ME</span>
+              {confirmedBooking ? (
+                <>
+                  <div className="payment-heading">
+                    <span className="payment-heading-icon material-symbols-outlined" aria-hidden="true">
+                      check_circle
+                    </span>
+                    <h1 className="payment-title">Booking confirmed</h1>
+                    <p className="payment-subtitle">Your stay is booked. Here are the details.</p>
                   </div>
-                </div>
-              </section>
 
-              <button type="button" className="payment-confirm-button" onClick={handleConfirmBooking}>
-                Confirm Booking (Demo)
-                <span className="material-symbols-outlined" aria-hidden="true">
-                  arrow_forward
-                </span>
-              </button>
+                  <BookingSummary booking={confirmedBooking} />
+                </>
+              ) : (
+                <>
+                  <div className="payment-heading">
+                    <span className="payment-heading-icon material-symbols-outlined" aria-hidden="true">
+                      schedule
+                    </span>
+                    <h1 className="payment-title">Final Step</h1>
+                    <p className="payment-subtitle">
+                      Confirm within {secondsLeft}s or this reservation will be released.
+                    </p>
+                  </div>
 
-              <p className="payment-note">
-                By clicking confirm, you agree to our Demo Terms of Service.
-              </p>
+                  <section className="payment-support-card" aria-labelledby="support-title">
+                    <div className="payment-support-icon-wrap">
+                      <span className="payment-support-icon material-symbols-outlined" aria-hidden="true">
+                        coffee
+                      </span>
+                    </div>
+                    <h2 id="support-title" className="payment-support-title">
+                      Support this project
+                    </h2>
+                    <p className="payment-support-text">
+                      This is a demo - no real payment is processed. If you&apos;d like to
+                      support this project, scan the code below.
+                    </p>
+
+                    <div className="payment-qr-wrap" aria-label="QR code placeholder">
+                      <div className="payment-qr-pattern" />
+                      <div className="payment-qr-overlay">
+                        <span className="payment-qr-label">SCAN ME</span>
+                      </div>
+                    </div>
+                  </section>
+
+                  {confirmError ? <p className="booking-error">{confirmError}</p> : null}
+
+                  <button
+                    type="button"
+                    className="payment-confirm-button"
+                    onClick={handleConfirmBooking}
+                    disabled={isConfirming}
+                  >
+                    {isConfirming ? 'Confirming...' : 'Confirm Booking (Demo)'}
+                    <span className="material-symbols-outlined" aria-hidden="true">
+                      arrow_forward
+                    </span>
+                  </button>
+
+                  <p className="payment-note">
+                    By clicking confirm, you agree to our Demo Terms of Service.
+                  </p>
+                </>
+              )}
             </div>
           </section>
 
           <div className="payment-back-row">
-            <button type="button" className="payment-back-button" onClick={() => navigate('/property/misty-forest-sanctuary')}>
+            <button
+              type="button"
+              className="payment-back-button"
+              onClick={() => navigate(propertyId ? `/property/${propertyId}` : '/')}
+            >
               <span className="material-symbols-outlined" aria-hidden="true">
                 arrow_back
               </span>
