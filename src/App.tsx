@@ -12,7 +12,7 @@ function App() {
         <Route path="/auth" element={<Auth />} />
         <Route path="/login" element={<Auth />} />
         <Route path="/property/:id" element={<PropertyDetail />} />
-        <Route path="/payment" element={<Payment />} />
+        <Route path="/payment/:id" element={<Payment />} />
       </Routes>
     </BrowserRouter>
   )
