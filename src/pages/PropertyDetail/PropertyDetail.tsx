@@ -8,6 +8,7 @@ import { BookingCard } from '../../components/BookingCard/BookingCard'
 import { Footer } from '../../components/Footer/Footer'
 import { Header } from '../../components/Header/Header'
 import { PhotoGallery } from '../../components/PhotoGallery/PhotoGallery'
+import { FiHeart, FiMapPin, FiShare2, FiUsers } from 'react-icons/fi'
 
 
 
@@ -71,30 +72,22 @@ export function PropertyDetail() {
           <div className="property-detail-meta-row">
             <div className="property-detail-meta-group">
               <span className="property-detail-meta-item">
-                <span className="property-detail-location-icon material-symbols-outlined" aria-hidden="true">
-                  location_on
-                </span>
+                <FiMapPin fontSize={20} strokeWidth={3}/>
                 {locationLabel}
               </span>
               <span className="property-detail-meta-item">
-                <span className="property-detail-location-icon material-symbols-outlined" aria-hidden="true">
-                  group
-                </span>
+                <FiUsers fontSize={20} strokeWidth={3}/>
                 {property.maxGuests} guests
               </span>
             </div>
 
             <div className="property-detail-actions">
               <button type="button" className="property-detail-action">
-                <span className="material-symbols-outlined" aria-hidden="true">
-                  share
-                </span>
+                <FiShare2 fontSize={20} strokeWidth={3}/>
                 <span>Share</span>
               </button>
               <button type="button" className="property-detail-action">
-                <span className="material-symbols-outlined" aria-hidden="true">
-                  favorite
-                </span>
+                <FiHeart fontSize={20} strokeWidth={3}/>
                 <span>Save</span>
               </button>
             </div>

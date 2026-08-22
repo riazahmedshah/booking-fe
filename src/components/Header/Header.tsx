@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
+import { MdCottage } from 'react-icons/md'
 
 export function Header() {
-  const { isAuthenticated, isLoading } = useAuth()
+  const { isAuthenticated, isLoading, user } = useAuth()
 
   return (
     <header className="site-header">
       <div className="site-header-inner">
         <Link className="site-logo" to="/" aria-label="stayz home">
-          <span className="material-symbols-outlined text-primary site-logo-icon">cottage</span>
+          <MdCottage size={32}/>
           stayz<span className="text-secondary">.</span>
         </Link>
 
@@ -26,10 +27,12 @@ export function Header() {
 
         <div className="site-header-actions">
           {isLoading ? null : isAuthenticated ? (
-            <Link className="btn-icon" to="#" aria-label="Your profile">
-              <span className="material-symbols-outlined" aria-hidden="true">
-                account_circle
-              </span>
+            <Link
+              to="#"
+              aria-label="Your profile"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary text-base font-bold text-on-primary transition-transform duration-200 active:scale-[0.98]"
+            >
+              {user?.firstName?.charAt(0).toUpperCase()}
             </Link>
           ) : (
             <>

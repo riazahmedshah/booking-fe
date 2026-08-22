@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { DayPicker, type DateRange } from 'react-day-picker'
 import 'react-day-picker/style.css'
 import { createBooking } from '../../apis/booking'
+import { FiInfo, FiMinus, FiPlus } from 'react-icons/fi'
 
 interface BookingCardProps {
   propertyId: string
@@ -122,9 +123,7 @@ export function BookingCard({
             onClick={() => setGuests((current) => Math.max(1, current - 1))}
             disabled={guests <= 1}
           >
-            <span className="material-symbols-outlined" aria-hidden="true">
-              remove
-            </span>
+            <FiMinus size={20} />
           </button>
           <button
             className="booking-stepper-button"
@@ -132,9 +131,7 @@ export function BookingCard({
             onClick={() => setGuests((current) => Math.min(maxGuests, current + 1))}
             disabled={guests >= maxGuests}
           >
-            <span className="material-symbols-outlined" aria-hidden="true">
-              add
-            </span>
+            <FiPlus size={20} />
           </button>
         </div>
       </div>
@@ -167,9 +164,7 @@ export function BookingCard({
       </div>
 
       <div className="booking-note">
-        <span className="booking-note-icon material-symbols-outlined" aria-hidden="true">
-          info
-        </span>
+        <FiInfo size={18} />
         <span>You won&apos;t be charged yet</span>
       </div>
     </aside>

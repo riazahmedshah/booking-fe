@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { login } from '../../apis/auth'
+import { MdCottage } from 'react-icons/md'
 
 const authImageUrl =
   'https://lh3.googleusercontent.com/aida-public/AB6AXuCOx9MyTyd8OKTc5ZqUR7H5pH7WGgcmfmhMa7sVKxzgYABrCuyjgzRcrLFgXTkbFia6wwU4D4T1uWORHyP5v9zKuMBoqtS-ZTD5aPWrMNmnkjMQlLakb_Q0ZdXdx9AbmXAKzbTFv73SXc4UrqvSfjdeVK0QxP2EwYqw5chW0T6oVN3n8QUrSfHYCcwi3rKRJja7E-x-t-o9qMAAeg-tCF5Xm1zyTuxw4CdQLK841fIalWb76kTu3vZKKQ'
@@ -51,7 +52,7 @@ export function Auth() {
           <div className="auth-brand">
             <Link to="/">
               <div className="auth-brand-mark" aria-hidden="true">
-                <span className="auth-brand-icon material-symbols-outlined">cottage</span>
+                <MdCottage fontSize={32} />
               </div>
               <h1 className="auth-brand-name">Stayz</h1>
             </Link>

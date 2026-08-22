@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import type { Property } from '../../apis/types'
+import { FiHeart, FiUsers } from 'react-icons/fi'
 
 interface PropertyCardProps {
   property: Property
@@ -23,8 +24,8 @@ export function PropertyCard({ property }: PropertyCardProps) {
           <img className="property-card-image" src={coverImage} alt={property.title} />
         </Link>
 
-        <button type="button" className="property-card-favorite" aria-label={`Save ${property.title}`}>
-          <span className="material-symbols-outlined">favorite</span>
+        <button type="button" className="property-card-favorite" aria-label={`Save ${property.title}`} title="Add to favorites">
+          <FiHeart size={24} />
         </button>
       </div>
 
@@ -36,9 +37,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
           </div>
 
           <div className="property-card-rating" aria-label={`Sleeps up to ${property.maxGuests} guests`}>
-            <span className="property-card-star material-symbols-outlined" aria-hidden="true">
-              group
-            </span>
+            <FiUsers size={24} />
             <span>{property.maxGuests}</span>
           </div>
         </div>

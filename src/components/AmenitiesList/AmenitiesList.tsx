@@ -1,3 +1,5 @@
+import { FaCheckCircle } from "react-icons/fa"
+
 interface AmenitiesListProps {
   amenities: string[]
 }
@@ -11,9 +13,7 @@ export function AmenitiesList({ amenities }: AmenitiesListProps) {
       <div className="amenities-grid">
         {amenities.map((amenity) => (
           <div className="amenities-item" key={amenity}>
-            <span className="amenities-icon material-symbols-outlined" aria-hidden="true">
-              check_circle
-            </span>
+            <FaCheckCircle fontSize={20} strokeWidth={3} />
             <span>{amenity}</span>
           </div>
         ))}

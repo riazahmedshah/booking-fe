@@ -1,3 +1,5 @@
+import { FiSearch } from "react-icons/fi";
+
 export function SearchBar() {
   return (
     <section className="page-search" aria-label="Search stays">
@@ -20,7 +22,7 @@ export function SearchBar() {
         </div>
 
         <button type="button" className="search-submit" aria-label="Search">
-          <span className="material-symbols-outlined">search</span>
+          <FiSearch size={24}/>
         </button>
       </div>
     </section>

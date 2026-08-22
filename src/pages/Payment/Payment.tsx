@@ -5,6 +5,9 @@ import { Header } from '../../components/Header/Header'
 import { BookingSummary } from '../../components/BookingSummary/BookingSummary'
 import type { ConfirmedBooking } from '../../apis/types'
 import { confirmBooking } from '../../apis/booking'
+import { FaCheckCircle } from 'react-icons/fa'
+import { FiArrowLeft, FiArrowRight, FiClock } from 'react-icons/fi'
+import { SiBuymeacoffee } from 'react-icons/si'
 
 const TIMEOUT_SECONDS = 60
 
@@ -61,9 +64,7 @@ export function Payment() {
               {confirmedBooking ? (
                 <>
                   <div className="payment-heading">
-                    <span className="payment-heading-icon material-symbols-outlined" aria-hidden="true">
-                      check_circle
-                    </span>
+                    <FaCheckCircle fontSize={24} />
                     <h1 className="payment-title">Booking confirmed</h1>
                     <p className="payment-subtitle">Your stay is booked. Here are the details.</p>
                   </div>
@@ -73,35 +74,31 @@ export function Payment() {
               ) : (
                 <>
                   <div className="payment-heading">
-                    <span className="payment-heading-icon material-symbols-outlined" aria-hidden="true">
-                      schedule
-                    </span>
+                    <FiClock  className="payment-heading-icon" fontSize={24}   />
                     <h1 className="payment-title">Final Step</h1>
                     <p className="payment-subtitle">
-                      Confirm within {secondsLeft}s or this reservation will be released.
+                      Confirm the payment within {secondsLeft}s
                     </p>
                   </div>
 
                   <section className="payment-support-card" aria-labelledby="support-title">
                     <div className="payment-support-icon-wrap">
-                      <span className="payment-support-icon material-symbols-outlined" aria-hidden="true">
-                        coffee
-                      </span>
+                      <SiBuymeacoffee fontSize={32} />
                     </div>
                     <h2 id="support-title" className="payment-support-title">
-                      Support this project
+                      Want to Support
                     </h2>
                     <p className="payment-support-text">
-                      This is a demo - no real payment is processed. If you&apos;d like to
-                      support this project, scan the code below.
+                      If you like this project and you&apos;d like to
+                      support me, scan the code below.
                     </p>
 
-                    <div className="payment-qr-wrap" aria-label="QR code placeholder">
-                      <div className="payment-qr-pattern" />
-                      <div className="payment-qr-overlay">
-                        <span className="payment-qr-label">SCAN ME</span>
-                      </div>
+                    <div className="payment-qr-wrap" aria-label="Support this project via UPI">
+                    <img src="/upi-qr/image.png" alt="UPI QR code" className="h-full w-full object-contain" />
+                    <div className="payment-qr-overlay">
+                      <span className="payment-qr-label">SCAN ME</span>
                     </div>
+                  </div>
                   </section>
 
                   {confirmError ? <p className="booking-error">{confirmError}</p> : null}
@@ -113,9 +110,7 @@ export function Payment() {
                     disabled={isConfirming}
                   >
                     {isConfirming ? 'Confirming...' : 'Confirm Booking (Demo)'}
-                    <span className="material-symbols-outlined" aria-hidden="true">
-                      arrow_forward
-                    </span>
+                    <FiArrowRight fontSize={20} strokeWidth={3} />
                   </button>
 
                   <p className="payment-note">
@@ -132,9 +127,7 @@ export function Payment() {
               className="payment-back-button"
               onClick={() => navigate(propertyId ? `/property/${propertyId}` : '/')}
             >
-              <span className="material-symbols-outlined" aria-hidden="true">
-                arrow_back
-              </span>
+              <FiArrowLeft fontSize={20} strokeWidth={3} />
               Return to Property Details
             </button>
           </div>
