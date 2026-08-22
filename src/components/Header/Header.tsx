@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 
 export function Header() {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, isLoading } = useAuth()
 
   return (
     <header className="site-header">
@@ -25,7 +25,7 @@ export function Header() {
         </nav>
 
         <div className="site-header-actions">
-          {isAuthenticated ? (
+          {isLoading ? null : isAuthenticated ? (
             <Link className="btn-icon" to="#" aria-label="Your profile">
               <span className="material-symbols-outlined" aria-hidden="true">
                 account_circle
