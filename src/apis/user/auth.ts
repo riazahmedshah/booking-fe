@@ -66,6 +66,19 @@ export async function Register(payload: RegisterPayload): Promise<{message: stri
 	return response.json()
 }
 
+export async function googleLogin(code: string): Promise<{ message: string }> {
+	const response = await fetch(`${API_BASE_URL}/auth/google?code=${encodeURIComponent(code)}`, {
+		method: 'POST',
+		credentials: 'include',
+	})
+
+	if (!response.ok) {
+		throw new Error(`Google login failed: ${response.status}`)
+	}
+
+	return response.json()
+}
+
 export async function getMe(): Promise<User> {
 	const response = await fetch(`${API_BASE_URL}/auth/me`, {
 		method: 'GET',
