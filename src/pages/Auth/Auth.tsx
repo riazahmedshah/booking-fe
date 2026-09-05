@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
-import { login } from '../../apis/auth'
+import { login } from '../../apis/user/auth'
 import { MdCottage } from 'react-icons/md'
 
 const authImageUrl =
@@ -18,7 +18,7 @@ export function Auth() {
 
   async function handleGuestLogin() {
     try {
-      await login({ email: 'exmple00@gmail.com', password: '123456' })
+      await login({ email: 'exmple00@gmail.com'})
       setIsAuthenticated(true)
       navigate('/')
 	} catch (error) {

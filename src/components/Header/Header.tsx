@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { MdCottage } from 'react-icons/md'
+import { useAuthModal } from '../../hooks/useAuthModal'
 
 export function Header() {
   const { isAuthenticated, isLoading, user } = useAuth()
-
+  const { openAuthModal } = useAuthModal()
   return (
     <header className="site-header">
       <div className="site-header-inner">
@@ -36,11 +37,8 @@ export function Header() {
             </Link>
           ) : (
             <>
-              <Link className="btn-ghost" to="/auth">
-                Login
-              </Link>
-              <button type="button" className="btn-primary">
-                Sign Up
+              <button type="button" className="btn-primary" onClick={openAuthModal}>
+                Login or Register
               </button>
             </>
           )}

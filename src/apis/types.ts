@@ -88,10 +88,3 @@ export interface ConfirmedBooking {
 	updatedAt: string
 }
 
-export interface User {
-	id: string
-	firstName: string
-	lastName: string
-	email: string
-	role: string
-}

@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState, type ReactNode } from 'react'
 import type { User } from '../apis/types'
-import { getMe } from '../apis/auth'
+import { getMe } from '../apis/user/auth'
 
 interface AuthContextValue {
 	isAuthenticated: boolean
