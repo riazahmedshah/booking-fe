@@ -3,7 +3,7 @@ import type { Property } from '../../apis/types'
 import { FiHeart, FiUsers } from 'react-icons/fi'
 
 interface PropertyCardProps {
-  property: Property
+  property: Property | null
 }
 
 const priceFormatter = new Intl.NumberFormat('en-US', {
@@ -11,7 +11,11 @@ const priceFormatter = new Intl.NumberFormat('en-US', {
 })
 
 export function PropertyCard({ property }: PropertyCardProps) {
-  const coverImage = `${property.id}/${property.imageUrls[property.imageUrls.length - 1]}`
+  if (!property) {
+    return null
+  }
+
+  const coverImage = ""
 
   return (
     <article className="property-card group">

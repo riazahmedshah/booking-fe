@@ -1,4 +1,4 @@
-import type { LoginPayload, RegisterPayload, sendOtpPayload, User, VerifyOtpPayload, VerifyOtpResponse } from "./types"
+import type { LoginPayload, RegisterPayload, sendOtpPayload, VerifyOtpPayload, VerifyOtpResponse } from "./types"
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
@@ -79,15 +79,3 @@ export async function googleLogin(code: string): Promise<{ message: string }> {
 	return response.json()
 }
 
-export async function getMe(): Promise<User> {
-	const response = await fetch(`${API_BASE_URL}/auth/me`, {
-		method: 'GET',
-		credentials: 'include',
-	})
-
-	if (!response.ok) {
-		throw new Error(`Not authenticated: ${response.status}`)
-	}
-
-	return response.json()
-}

@@ -12,12 +12,13 @@ import {
   googleLogin,
 } from "../../apis/user/auth";
 import { useGoogleLogin } from "@react-oauth/google";
+import { getMe } from "../../apis/user/user";
 
 type Step = "email" | "otp" | "name";
 
 export function AuthModal() {
   const { isOpen, closeAuthModal } = useAuthModal();
-  const { setIsAuthenticated } = useAuth();
+  const { setIsAuthenticated, setUser } = useAuth();
 
   const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
@@ -35,7 +36,10 @@ export function AuthModal() {
 
       try {
         await googleLogin(code);
-        setIsAuthenticated(true);
+        const me = await getMe()
+        setUser(me)
+        setIsAuthenticated(true)
+
         resetAndClose();
       } catch (err) {
         setError("Google login failed. Please try again.");
@@ -95,7 +99,10 @@ export function AuthModal() {
 
       if (data.userExists) {
         await login({ email });
-        setIsAuthenticated(true);
+        const me = await getMe()
+        setUser(me)
+        setIsAuthenticated(true)
+
         resetAndClose();
       } else {
         setStep("name");
@@ -119,7 +126,9 @@ export function AuthModal() {
 
     try {
       await Register({ email, firstName, lastName });
-      setIsAuthenticated(true);
+      const me = await getMe()
+      setUser(me)
+      setIsAuthenticated(true)
       resetAndClose();
     } catch (err) {
       setError("Registration failed. Please try again.");

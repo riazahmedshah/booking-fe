@@ -3,6 +3,8 @@ import { Home } from './pages/Home/Home'
 import { Auth } from './pages/Auth/Auth'
 import { Payment } from './pages/Payment/Payment'
 import { PropertyDetail } from './pages/PropertyDetail/PropertyDetail'
+import { HostRoute } from './components/HostRoute/HostRoute'
+import CreateProperty from './pages/Host/CreateProperty/CreateProperty'
 
 function App() {
   return (
@@ -13,6 +15,14 @@ function App() {
         <Route path="/login" element={<Auth />} />
         <Route path="/property/:id" element={<PropertyDetail />} />
         <Route path="/payment/:key" element={<Payment />} />
+        <Route
+          path="/host/create"
+          element={
+            <HostRoute>
+              <CreateProperty />
+            </HostRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   )

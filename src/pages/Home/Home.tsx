@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { fetchCategories } from '../../apis/categories'
-import { fetchProperties } from '../../apis/properties'
+import { fetchProperties } from '../../apis/properties/properties'
 import type { Category, Property } from '../../apis/types'
 import { CategoryFilter } from '../../components/CategoryFilter/CategoryFilter'
 import { Footer } from '../../components/Footer/Footer'

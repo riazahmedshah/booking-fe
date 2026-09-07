@@ -123,6 +123,10 @@
 		@apply m-0 text-[clamp(2.75rem,6vw,4rem)] font-heading font-extrabold tracking-[-0.04em] text-on-primary leading-[1.08];
 	}
 
+	.page-create-title {
+		@apply m-0 text-[clamp(2.75rem,6vw,4rem)] font-heading font-extrabold tracking-[-0.04em] leading-[1.08];
+	}
+
 	.page-hero-subtitle {
 		@apply mx-auto mt-4 max-w-2xl text-[1.125rem] leading-[1.65] text-on-primary/80;
 	}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { fetchPropertyById, fetchPropertyAvailability } from '../../apis/properties'
+import { fetchPropertyById, fetchPropertyAvailability } from '../../apis/properties/properties'
 import type { PropertyDetail as PropertyDetailType } from '../../apis/types'
 import { AmenitiesList } from '../../components/AmenitiesList/AmenitiesList'
 import { getUnavailableDates } from '../../utils/availability'
