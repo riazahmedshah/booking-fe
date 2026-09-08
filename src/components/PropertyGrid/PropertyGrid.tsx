@@ -1,8 +1,8 @@
-import type { Property } from '../../apis/types'
+import type { PropertyResponse } from '../../apis/properties/types'
 import { PropertyCard } from '../PropertyCard/PropertyCard'
 
 interface PropertyGridProps {
-  properties: Property[]
+  properties: PropertyResponse[]
 }
 
 export function PropertyGrid({ properties }: PropertyGridProps) {

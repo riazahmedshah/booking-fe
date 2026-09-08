@@ -5,6 +5,7 @@ import { Payment } from './pages/Payment/Payment'
 import { PropertyDetail } from './pages/PropertyDetail/PropertyDetail'
 import { HostRoute } from './components/HostRoute/HostRoute'
 import CreateProperty from './pages/Host/CreateProperty/CreateProperty'
+import { Hostings } from './pages/Host/Hostings/Hostings'
 
 function App() {
   return (
@@ -20,6 +21,14 @@ function App() {
           element={
             <HostRoute>
               <CreateProperty />
+            </HostRoute>
+          }
+        />
+        <Route
+          path="/host/hostings"
+          element={
+            <HostRoute>
+              <Hostings />
             </HostRoute>
           }
         />

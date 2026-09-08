@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
-import type { Property } from '../../apis/types'
 import { FiHeart, FiUsers } from 'react-icons/fi'
+import type { PropertyResponse } from '../../apis/properties/types'
+import { getCoverImageUrl } from '../../utils/propertyImage'
 
 interface PropertyCardProps {
-  property: Property | null
+  property: PropertyResponse | null
 }
 
 const priceFormatter = new Intl.NumberFormat('en-US', {
@@ -15,7 +16,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
     return null
   }
 
-  const coverImage = ""
+  const coverImage = getCoverImageUrl(property.images)
 
   return (
     <article className="property-card group">
@@ -25,7 +26,11 @@ export function PropertyCard({ property }: PropertyCardProps) {
           to={`/property/${property.id}`}
           aria-label={`View ${property.title}`}
         >
-          <img className="property-card-image" src={coverImage} alt={property.title} />
+          {coverImage ? (
+            <img className="property-card-image" src={coverImage} alt={property.title} />
+          ) : (
+            <div className="property-card-image-placeholder">No image available</div>
+          )}
         </Link>
 
         <button type="button" className="property-card-favorite" aria-label={`Save ${property.title}`} title="Add to favorites">

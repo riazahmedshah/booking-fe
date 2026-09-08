@@ -56,7 +56,7 @@ async function confirmBecomeHost() {
           {isLoading ? null : isAuthenticated ? (
             <>
               {user?.role === 'host' ? (
-                <Link className="btn-ghost" to="/host/create">
+                <Link className="btn-ghost" to="/host/hostings">
                   Host
                 </Link>
               ) : (

@@ -209,6 +209,10 @@
 		@apply h-full w-full object-cover transition-transform duration-500;
 	}
 
+	.property-card-image-placeholder {
+		@apply flex h-full w-full items-center justify-center bg-surface-low text-sm text-text-variant;
+	}
+
 	.property-card:hover .property-card-image {
 		@apply scale-105;
 	}

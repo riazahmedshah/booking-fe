@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react'
 import { fetchCategories } from '../../apis/categories'
 import { fetchProperties } from '../../apis/properties/properties'
-import type { Category, Property } from '../../apis/types'
+import type { Category } from '../../apis/types'
 import { CategoryFilter } from '../../components/CategoryFilter/CategoryFilter'
 import { Footer } from '../../components/Footer/Footer'
 import { Header } from '../../components/Header/Header'
 import { PropertyGrid } from '../../components/PropertyGrid/PropertyGrid'
 import { Banner } from '../../components/Banner/Banner'
+import type { PropertyResponse } from '../../apis/properties/types'
 
 export function Home() {
-  const [properties, setProperties] = useState<Property[]>([])
+  const [properties, setProperties] = useState<PropertyResponse[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [isLoading, setIsLoading] = useState(true)
 

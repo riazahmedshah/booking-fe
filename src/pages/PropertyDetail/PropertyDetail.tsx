@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { fetchPropertyById, fetchPropertyAvailability } from '../../apis/properties/properties'
-import type { PropertyDetail as PropertyDetailType } from '../../apis/types'
 import { AmenitiesList } from '../../components/AmenitiesList/AmenitiesList'
 import { getUnavailableDates } from '../../utils/availability'
 import { BookingCard } from '../../components/BookingCard/BookingCard'
@@ -9,6 +8,7 @@ import { Footer } from '../../components/Footer/Footer'
 import { Header } from '../../components/Header/Header'
 import { PhotoGallery } from '../../components/PhotoGallery/PhotoGallery'
 import { FiHeart, FiMapPin, FiShare2, FiUsers } from 'react-icons/fi'
+import type { PropertyResponseWithHost } from '../../apis/properties/types'
 
 
 
@@ -25,7 +25,7 @@ const placeholderAmenities = ['Wifi', 'Kitchen', 'Free parking', 'Dedicated work
 
 export function PropertyDetail() {
   const { id = '' } = useParams()
-  const [property, setProperty] = useState<PropertyDetailType | null>(null)
+  const [property, setProperty] = useState<PropertyResponseWithHost | null>(null)
   const [unavailableDates, setUnavailableDates] = useState<Date[]>([])
 
   useEffect(() => {
@@ -94,7 +94,7 @@ export function PropertyDetail() {
           </div>
         </section>
 
-        <PhotoGallery id={property.id} images={property.images} />
+        <PhotoGallery images={property.images} />
 
         <section className="property-detail-content-grid">
           <div className="property-detail-left-column">

@@ -66,3 +66,38 @@ export interface CreatePropertyAndAddressRequest {
   address: addressPayload;
   images: File[];
 }
+
+// GET Response
+
+interface propertyAddress {
+	id: string
+	country: string
+	state: string
+	pincode: string
+	city?: string | null
+	area: string
+	propertyId: string
+}
+
+export interface PropertyImage {
+	id: string
+	key?: string | null
+	status?: string | null
+}
+
+export interface PropertyResponse {
+	id: string
+	title: string
+	subTitle?: string | null
+	price: number
+	hostId: string
+	maxGuests: number
+	address: propertyAddress
+	images: PropertyImage[]
+	createdAt: string
+	updatedAt: string
+}
+
+export interface PropertyResponseWithHost extends PropertyResponse {
+	host: PropertyHost
+}

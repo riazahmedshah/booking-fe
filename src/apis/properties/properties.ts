@@ -1,9 +1,9 @@
-import type { AvailabilityMonth, CreatePropertyAndAddressRequest, Property, PropertyDetail } from './types'
+import type { AvailabilityMonth, CreatePropertyAndAddressRequest, Property, PropertyResponse, PropertyResponseWithHost } from './types'
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export async function fetchProperties(): Promise<Property[]> {
+export async function fetchProperties(): Promise<PropertyResponse[]> {
 	const response = await fetch(`${API_BASE_URL}/property`);
 
 	if (!response.ok) {
@@ -13,7 +13,7 @@ export async function fetchProperties(): Promise<Property[]> {
 	return response.json();
 }
 
-export async function fetchPropertyById(id: string): Promise<PropertyDetail> {
+export async function fetchPropertyById(id: string): Promise<PropertyResponseWithHost> {
 	const response = await fetch(`${API_BASE_URL}/property/${id}`)
 
 	if (!response.ok) {
@@ -48,6 +48,28 @@ export async function createProperty(payload: CreatePropertyAndAddressRequest): 
 
 	if (!response.ok) {
 		throw new Error(`Property creation failed: ${response.status}`)
+	}
+
+	return response.json()
+}
+
+export async function listPropertiesByHost(): Promise<PropertyResponse[]> {
+	const response = await fetch(`${API_BASE_URL}/property/host/hostings`)
+	if (!response.ok) {
+		throw new Error(`Failed to fetch properties by host: ${response.status}`)
+	}
+
+	return response.json()
+}
+
+export async function fetchHostings(): Promise<PropertyResponse[]> {
+	const response = await fetch(`${API_BASE_URL}/property/host/hostings`, {
+		method: 'GET',
+		credentials: 'include',
+	})
+
+	if (!response.ok) {
+		throw new Error(`Failed to fetch hostings: ${response.status}`)
 	}
 
 	return response.json()
