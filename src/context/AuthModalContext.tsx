@@ -1,4 +1,5 @@
-import { createContext, useState, type ReactNode } from 'react'
+import { createContext, useEffect, useState, type ReactNode } from 'react'
+import { onAuthRequired } from '../apis/authEvents'
 
 interface AuthModalContextValue {
 	isOpen: boolean
@@ -11,6 +12,9 @@ export const AuthModalContext = createContext<AuthModalContextValue | null>(null
 export function AuthModalProvider({ children }: { children: ReactNode }) {
 	const [isOpen, setIsOpen] = useState(false)
 
+	useEffect(() => {
+		return onAuthRequired(() => setIsOpen(true))
+	}, [])
 	return (
 		<AuthModalContext
 			value={{

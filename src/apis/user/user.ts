@@ -1,3 +1,4 @@
+import { handleApiResponse } from "../handleResponse"
 import type { User } from "./types"
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
@@ -8,11 +9,7 @@ export async function becomeHost(): Promise<{ message: string }> {
 		credentials: 'include',
 	})
 
-	if (!response.ok) {
-		throw new Error(`Role update failed: ${response.status}`)
-	}
-
-	return response.json()
+	return handleApiResponse<{ message: string }>(response)
 }
 
 export async function getMe(): Promise<User> {
@@ -21,9 +18,5 @@ export async function getMe(): Promise<User> {
 		credentials: 'include',
 	})
 
-	if (!response.ok) {
-		throw new Error(`Not authenticated: ${response.status}`)
-	}
-
-	return response.json()
+	return handleApiResponse<User>(response)
 }

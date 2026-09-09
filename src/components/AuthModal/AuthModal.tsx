@@ -95,9 +95,9 @@ export function AuthModal() {
     setError(null);
 
     try {
-      const { data } = await verifyOtp({ email, otp: Number(otp) });
+      const result = await verifyOtp({ email, otp: Number(otp) });
 
-      if (data.userExists) {
+      if (result.userExists) {
         await login({ email });
         const me = await getMe()
         setUser(me)
@@ -108,7 +108,7 @@ export function AuthModal() {
         setStep("name");
       }
     } catch (err) {
-      setError("Verification failed. Please try again.");
+      setError(err instanceof Error ? err.message : "Verification failed. Please try again.");
       console.error(err);
     } finally {
       setIsSubmitting(false);
@@ -131,7 +131,7 @@ export function AuthModal() {
       setIsAuthenticated(true)
       resetAndClose();
     } catch (err) {
-      setError("Registration failed. Please try again.");
+      setError(err instanceof Error ? err.message : "Registration failed. Please try again.");
       console.error(err);
     } finally {
       setIsSubmitting(false);

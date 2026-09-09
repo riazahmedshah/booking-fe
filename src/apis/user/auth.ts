@@ -1,3 +1,4 @@
+import { handleApiResponse } from "../handleResponse"
 import type { LoginPayload, RegisterPayload, sendOtpPayload, VerifyOtpPayload, VerifyOtpResponse } from "./types"
 
 
@@ -14,14 +15,10 @@ export async function sendOtp(payload: sendOtpPayload): Promise<{message: string
 		body: JSON.stringify(payload),
 	})
 
-	if (!response.ok) {
-		throw new Error(`Send OTP failed: ${response.status}`)
-	}
-
-	return response.json()
+	return handleApiResponse<{message: string}>(response)	
 }
 
-export async function verifyOtp(payload: VerifyOtpPayload): Promise<VerifyOtpResponse> {
+export async function verifyOtp(payload: VerifyOtpPayload): Promise<VerifyOtpResponse['data']> {
 	const response = await fetch(`${API_BASE_URL}/auth/otp/verify`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -29,11 +26,7 @@ export async function verifyOtp(payload: VerifyOtpPayload): Promise<VerifyOtpRes
 		body: JSON.stringify(payload),
 	})
 
-	if (!response.ok) {
-		throw new Error(`Verify OTP failed: ${response.status}`)
-	}
-
-	return response.json()
+	return handleApiResponse<VerifyOtpResponse['data']>(response)
 }
 
 export async function login(payload: LoginPayload): Promise<{message: string}> {
@@ -44,11 +37,7 @@ export async function login(payload: LoginPayload): Promise<{message: string}> {
 		body: JSON.stringify(payload),
 	})
 
-	if (!response.ok) {
-		throw new Error(`Login failed: ${response.status}`)
-	}
-
-	return response.json()
+	return handleApiResponse<{message: string}>(response)
 }
 
 export async function Register(payload: RegisterPayload): Promise<{message: string}> {
@@ -59,11 +48,7 @@ export async function Register(payload: RegisterPayload): Promise<{message: stri
 		body: JSON.stringify(payload),
 	})
 
-	if (!response.ok) {
-		throw new Error(`Register failed: ${response.status}`)
-	}
-
-	return response.json()
+	return handleApiResponse<{message: string}>(response)
 }
 
 export async function googleLogin(code: string): Promise<{ message: string }> {
@@ -72,10 +57,6 @@ export async function googleLogin(code: string): Promise<{ message: string }> {
 		credentials: 'include',
 	})
 
-	if (!response.ok) {
-		throw new Error(`Google login failed: ${response.status}`)
-	}
-
-	return response.json()
+	return handleApiResponse<{ message: string }>(response)
 }
 

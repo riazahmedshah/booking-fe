@@ -3,11 +3,11 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Footer } from '../../components/Footer/Footer'
 import { Header } from '../../components/Header/Header'
 import { BookingSummary } from '../../components/BookingSummary/BookingSummary'
-import type { ConfirmedBooking } from '../../apis/types'
-import { confirmBooking } from '../../apis/booking'
 import { FaCheckCircle } from 'react-icons/fa'
 import { FiArrowLeft, FiArrowRight, FiClock } from 'react-icons/fi'
 import { SiBuymeacoffee } from 'react-icons/si'
+import type { ConfirmedBooking } from '../../apis/booking/types'
+import { confirmBooking } from '../../apis/booking/booking'
 
 const TIMEOUT_SECONDS = 60
 

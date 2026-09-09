@@ -1,12 +1,7 @@
-export interface PropertyImage {
-  src: string
-  alt: string
-}
-
-
-
-
-
+// export interface PropertyImage {
+//   src: string
+//   alt: string
+// }
 
 export interface Category {
   id: string
@@ -15,32 +10,27 @@ export interface Category {
   active?: boolean
 }
 
-export interface Booking {
-  id: string
-  propertyTitle: string
-  propertyThumbnail: PropertyImage
-  dates: string
-  guests: number
-  totalAmount: number
+// export interface Booking {
+//   id: string
+//   propertyTitle: string
+//   propertyThumbnail: PropertyImage
+//   dates: string
+//   guests: number
+//   totalAmount: number
+// }
+
+export interface ApiSuccess<T> {
+	success: true
+	data: T
+	message: string
 }
 
-export interface CreateBookingPayload {
-	propertyId: string
-	totalPrice: number
-	checkIn: string
-	checkOut: string
+export interface ApiError {
+	success: false
+	error: {
+		code: string
+		message: string
+	}
 }
 
-
-export interface ConfirmedBooking {
-	id: string
-	userId: string
-	propertyId: string
-	totalPrice: number
-	status: string
-	checkIn: string
-	checkOut: string
-	createdAt: string
-	updatedAt: string
-}
-
+export type ApiResponse<T> = ApiSuccess<T> | ApiError

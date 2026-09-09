@@ -1,3 +1,4 @@
+import { handleApiResponse } from '../handleResponse';
 import type { AvailabilityMonth, CreatePropertyAndAddressRequest, Property, PropertyResponse, PropertyResponseWithHost } from './types'
 
 
@@ -6,31 +7,19 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export async function fetchProperties(): Promise<PropertyResponse[]> {
 	const response = await fetch(`${API_BASE_URL}/property`);
 
-	if (!response.ok) {
-		throw new Error(`Failed to fetch properties: ${response.status}`);
-	}
-
-	return response.json();
+	return handleApiResponse<PropertyResponse[]>(response);	
 }
 
 export async function fetchPropertyById(id: string): Promise<PropertyResponseWithHost> {
 	const response = await fetch(`${API_BASE_URL}/property/${id}`)
 
-	if (!response.ok) {
-		throw new Error(`Failed to fetch property: ${response.status}`)
-	}
-
-	return response.json()
+	return handleApiResponse<PropertyResponseWithHost>(response)
 }
 
 export async function fetchPropertyAvailability(id: string): Promise<AvailabilityMonth[]> {
 	const response = await fetch(`${API_BASE_URL}/property/${id}/availability`)
 
-	if (!response.ok) {
-		throw new Error(`Failed to fetch availability: ${response.status}`)
-	}
-
-	return response.json()
+	return handleApiResponse<AvailabilityMonth[]>(response)
 }
 
 
@@ -46,20 +35,12 @@ export async function createProperty(payload: CreatePropertyAndAddressRequest): 
 		body: formData,
 	})
 
-	if (!response.ok) {
-		throw new Error(`Property creation failed: ${response.status}`)
-	}
-
-	return response.json()
+	return handleApiResponse<Property>(response)
 }
 
 export async function listPropertiesByHost(): Promise<PropertyResponse[]> {
 	const response = await fetch(`${API_BASE_URL}/property/host/hostings`)
-	if (!response.ok) {
-		throw new Error(`Failed to fetch properties by host: ${response.status}`)
-	}
-
-	return response.json()
+	return handleApiResponse<PropertyResponse[]>(response)
 }
 
 export async function fetchHostings(): Promise<PropertyResponse[]> {
@@ -68,9 +49,5 @@ export async function fetchHostings(): Promise<PropertyResponse[]> {
 		credentials: 'include',
 	})
 
-	if (!response.ok) {
-		throw new Error(`Failed to fetch hostings: ${response.status}`)
-	}
-
-	return response.json()
+	return handleApiResponse<PropertyResponse[]>(response)
 }

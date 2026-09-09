@@ -2,8 +2,11 @@ import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { DayPicker, type DateRange } from 'react-day-picker'
 import 'react-day-picker/style.css'
-import { createBooking } from '../../apis/booking'
 import { FiInfo, FiMinus, FiPlus } from 'react-icons/fi'
+import { useToast } from '../../hooks/useToast'
+import { AppError } from '../../apis/erros'
+import { createBooking } from '../../apis/booking/booking'
+import { ConfirmModal } from '../ConfirmModal/ConfirmModal'
 
 interface BookingCardProps {
   propertyId: string
@@ -52,6 +55,9 @@ export function BookingCard({
   const [isBooking, setIsBooking] = useState(false)
   const [bookingError, setBookingError] = useState<string | null>(null)
 
+  const { showToast } = useToast()
+const [showHeldModal, setShowHeldModal] = useState(false)
+
   useEffect(() => {
     setGuests((current) => Math.min(current, maxGuests || 1))
   }, [maxGuests])
@@ -84,8 +90,14 @@ export function BookingCard({
       })
       navigate(`/payment/${idempotency_key}`, { state: { propertyId } })
     } catch (error) {
-      setBookingError('Booking failed. Please try again.')
-      console.error(error)
+      if (error instanceof AppError && error.code === 'PROPERTY_HELD') {
+      setShowHeldModal(true)
+    } else if (error instanceof AppError && error.code !== "UNAUTHORIZED") {
+      showToast(error.message)
+    } else {
+      showToast('Something went wrong. Please try again.')
+    }
+    console.error(error)
     } finally {
       setIsBooking(false)
     }
@@ -167,6 +179,16 @@ export function BookingCard({
         <FiInfo size={18} />
         <span>You won&apos;t be charged yet</span>
       </div>
+
+      {showHeldModal ? (
+  <ConfirmModal
+    title="Property currently held"
+    message="This property is being reserved by another user right now. Please try again in a few minutes."
+    confirmLabel="Got it"
+    onConfirm={() => setShowHeldModal(false)}
+    onCancel={() => setShowHeldModal(false)}
+  />
+) : null}
     </aside>
   )
 }

@@ -1,3 +1,4 @@
+import { handleApiResponse } from "../handleResponse"
 import type { ConfirmedBooking, CreateBookingPayload } from "./types"
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
@@ -13,11 +14,7 @@ export async function createBooking(payload: CreateBookingPayload): Promise<Crea
 		credentials: 'include',
 		body: JSON.stringify(payload),
 	})
-	if (!response.ok) {
-		throw new Error(`Booking failed: ${response.status}`)
-	}
-
-  return response.json()
+	return handleApiResponse<CreateBookingResponse>(response)
 }
 
 export async function confirmBooking(idempotencyKey: string): Promise<ConfirmedBooking> {
@@ -26,9 +23,5 @@ export async function confirmBooking(idempotencyKey: string): Promise<ConfirmedB
 		credentials: 'include',
 	})
 
-	if (!response.ok) {
-		throw new Error(`Booking confirmation failed: ${response.status}`)
-	}
-
-	return response.json()
+	return handleApiResponse<ConfirmedBooking>(response)
 }
