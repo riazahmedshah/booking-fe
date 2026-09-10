@@ -19,12 +19,15 @@ export async function sendOtp(payload: sendOtpPayload): Promise<{message: string
 }
 
 export async function verifyOtp(payload: VerifyOtpPayload): Promise<VerifyOtpResponse['data']> {
+	// console.log('verifyOtp fetch starting', payload)
 	const response = await fetch(`${API_BASE_URL}/auth/otp/verify`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		credentials: 'include',
 		body: JSON.stringify(payload),
 	})
+	// console.log('verifyOtp fetch response', await response.json())
+	// console.log('verifyOtp fetch done', response.status)
 
 	return handleApiResponse<VerifyOtpResponse['data']>(response)
 }
