@@ -5,6 +5,7 @@ import { Footer } from '../../../components/Footer/Footer'
 import { getCoverImageUrl } from '../../../utils/propertyImage'
 import type { PropertyResponse } from '../../../apis/properties/types'
 import { fetchHostings } from '../../../apis/properties/properties'
+import { useToast } from '../../../hooks/useToast'
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -15,6 +16,7 @@ const currencyFormatter = new Intl.NumberFormat('en-US', {
 export function Hostings() {
   const [hostings, setHostings] = useState<PropertyResponse[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const { showToast } = useToast()
 
   useEffect(() => {
     let isMounted = true
@@ -24,8 +26,11 @@ export function Hostings() {
         const data = await fetchHostings()
         if (isMounted) {
           setHostings(data)
+          showToast('Listings loaded.', { variant: 'success' })
         }
       } catch (err) {
+        const message = err instanceof Error ? err.message : 'An unexpected error occurred'
+        showToast(message, { variant: 'error' })
         console.error('Failed to load hostings', err)
       } finally {
         if (isMounted) {

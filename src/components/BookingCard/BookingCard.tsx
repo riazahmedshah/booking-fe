@@ -75,6 +75,7 @@ const [showHeldModal, setShowHeldModal] = useState(false)
   async function handleReserve() {
     if (!range?.from || !range?.to) {
       setBookingError('Please select check-in and check-out dates')
+      showToast('Please select check-in and check-out dates', { variant: 'error' })
       return
     }
 
@@ -82,22 +83,22 @@ const [showHeldModal, setShowHeldModal] = useState(false)
     setBookingError(null)
 
     try {
-      const {idempotency_key} = await createBooking ({
+      const { idempotency_key } = await createBooking({
         propertyId,
         totalPrice: total,
         checkIn: formatDateForApi(range.from),
         checkOut: formatDateForApi(range.to),
       })
+      showToast('Reservation created. Redirecting to payment.', { variant: 'success' })
       navigate(`/payment/${idempotency_key}`, { state: { propertyId } })
-    } catch (error) {
-      if (error instanceof AppError && error.code === 'PROPERTY_HELD') {
-      setShowHeldModal(true)
-    } else if (error instanceof AppError && error.code !== "UNAUTHORIZED") {
-      showToast(error.message)
-    } else {
-      showToast('Something went wrong. Please try again.')
-    }
-    console.error(error)
+    } catch (err) {
+      if (err instanceof AppError && err.code === 'PROPERTY_HELD') {
+        setShowHeldModal(true)
+      }
+
+      const message = err instanceof Error ? err.message : 'An unexpected error occurred'
+      showToast(message, { variant: 'error' })
+      console.error(err)
     } finally {
       setIsBooking(false)
     }
@@ -181,14 +182,14 @@ const [showHeldModal, setShowHeldModal] = useState(false)
       </div>
 
       {showHeldModal ? (
-  <ConfirmModal
-    title="Property currently held"
-    message="This property is being reserved by another user right now. Please try again in a few minutes."
-    confirmLabel="Got it"
-    onConfirm={() => setShowHeldModal(false)}
-    onCancel={() => setShowHeldModal(false)}
-  />
-) : null}
+        <ConfirmModal
+          title="Property currently held"
+          message="This property is being reserved by another user right now. Please try again in a few minutes."
+          confirmLabel="Got it"
+          onConfirm={() => setShowHeldModal(false)}
+          onCancel={() => setShowHeldModal(false)}
+        />
+      ) : null}
     </aside>
   )
 }

@@ -8,11 +8,13 @@ import { Header } from '../../components/Header/Header'
 import { PropertyGrid } from '../../components/PropertyGrid/PropertyGrid'
 import { Banner } from '../../components/Banner/Banner'
 import type { PropertyResponse } from '../../apis/properties/types'
+import { useToast } from '../../hooks/useToast'
 
 export function Home() {
   const [properties, setProperties] = useState<PropertyResponse[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const { showToast } = useToast()
 
   useEffect(() => {
     let isMounted = true
@@ -30,6 +32,12 @@ export function Home() {
 
         setProperties(nextProperties)
         setCategories(nextCategories)
+        showToast('Home content loaded.', { variant: 'success' })
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'An unexpected error occurred'
+        showToast(message, { variant: 'error' })
+        setProperties([])
+        setCategories([])
       } finally {
         if (isMounted) {
           setIsLoading(false)

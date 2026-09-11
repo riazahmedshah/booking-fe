@@ -9,6 +9,7 @@ import { Header } from '../../components/Header/Header'
 import { PhotoGallery } from '../../components/PhotoGallery/PhotoGallery'
 import { FiHeart, FiMapPin, FiShare2, FiUsers } from 'react-icons/fi'
 import type { PropertyResponseWithHost } from '../../apis/properties/types'
+import { useToast } from '../../hooks/useToast'
 
 
 
@@ -27,18 +28,37 @@ export function PropertyDetail() {
   const { id = '' } = useParams()
   const [property, setProperty] = useState<PropertyResponseWithHost | null>(null)
   const [unavailableDates, setUnavailableDates] = useState<Date[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [loadError, setLoadError] = useState<string | null>(null)
+  const { showToast } = useToast()
 
   useEffect(() => {
     let isMounted = true
 
     async function loadProperty() {
-     const [nextProperty, availability] = await Promise.all([
-        fetchPropertyById(id),
-        fetchPropertyAvailability(id),
-      ])
-      if (isMounted) {
-        setProperty(nextProperty)
-        setUnavailableDates(getUnavailableDates(availability))
+      try {
+        const [nextProperty, availability] = await Promise.all([
+          fetchPropertyById(id),
+          fetchPropertyAvailability(id),
+        ])
+        if (isMounted) {
+          setProperty(nextProperty)
+          setUnavailableDates(getUnavailableDates(availability))
+          setLoadError(null)
+          showToast('Property details loaded.', { variant: 'success' })
+        }
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'An unexpected error occurred'
+        if (isMounted) {
+          setProperty(null)
+          setUnavailableDates([])
+          setLoadError(message)
+        }
+        showToast(message, { variant: 'error' })
+      } finally {
+        if (isMounted) {
+          setIsLoading(false)
+        }
       }
     }
 
@@ -49,12 +69,23 @@ export function PropertyDetail() {
     }
   }, [id])
 
-  if (!property) {
+  if (isLoading) {
     return (
       <div className="property-detail-page">
         <Header />
         <main className="property-detail-main">
           <div className="property-detail-loading">Loading property details...</div>
+        </main>
+      </div>
+    )
+  }
+
+  if (loadError || !property) {
+    return (
+      <div className="property-detail-page">
+        <Header />
+        <main className="property-detail-main">
+          <div className="property-detail-loading">{loadError ?? 'Property details are unavailable.'}</div>
         </main>
       </div>
     )

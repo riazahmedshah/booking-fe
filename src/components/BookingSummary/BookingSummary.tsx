@@ -1,4 +1,4 @@
-import type { ConfirmedBooking } from '../../apis/types'
+import type { ConfirmedBooking } from "../../apis/booking/types"
 
 interface BookingSummaryProps {
   booking: ConfirmedBooking

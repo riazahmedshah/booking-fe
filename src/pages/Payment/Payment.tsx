@@ -8,6 +8,7 @@ import { FiArrowLeft, FiArrowRight, FiClock } from 'react-icons/fi'
 import { SiBuymeacoffee } from 'react-icons/si'
 import type { ConfirmedBooking } from '../../apis/booking/types'
 import { confirmBooking } from '../../apis/booking/booking'
+import { useToast } from '../../hooks/useToast'
 
 const TIMEOUT_SECONDS = 60
 
@@ -21,6 +22,7 @@ export function Payment() {
   const [isConfirming, setIsConfirming] = useState(false)
   const [confirmError, setConfirmError] = useState<string | null>(null)
   const [confirmedBooking, setConfirmedBooking] = useState<ConfirmedBooking | null>(null)
+  const { showToast } = useToast()
 
   useEffect(() => {
     if (confirmedBooking) return
@@ -41,9 +43,12 @@ export function Payment() {
     try {
       const booking = await confirmBooking(key)
       setConfirmedBooking(booking)
-    } catch (error) {
-      setConfirmError('Could not confirm booking. Please try again.')
-      console.error(error)
+      showToast('Booking confirmed.', { variant: 'success' })
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'An unexpected error occurred'
+      setConfirmError(message)
+      showToast(message, { variant: 'error' })
+      console.error(err)
     } finally {
       setIsConfirming(false)
     }

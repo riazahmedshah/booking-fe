@@ -4,6 +4,7 @@ import { Header } from '../../../components/Header/Header'
 import { Footer } from '../../../components/Footer/Footer'
 import { validateImageFiles } from '../../../utils/fileValidation'
 import { createProperty } from '../../../apis/properties/properties'
+import { useToast } from '../../../hooks/useToast'
 
 export function CreateProperty() {
   const navigate = useNavigate()
@@ -24,6 +25,7 @@ export function CreateProperty() {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formError, setFormError] = useState<string | null>(null)
+  const { showToast } = useToast()
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files ?? [])
@@ -74,9 +76,12 @@ export function CreateProperty() {
         images,
       })
 
+      showToast('Property created successfully.', { variant: 'success' })
       navigate('/')
     } catch (err) {
-      setFormError('Could not create property. Please try again.')
+      const message = err instanceof Error ? err.message : 'An unexpected error occurred'
+      setFormError(message)
+      showToast(message, { variant: 'error' })
       console.error(err)
     } finally {
       setIsSubmitting(false)

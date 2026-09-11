@@ -5,8 +5,10 @@ import { MdCottage } from 'react-icons/md'
 import { useAuthModal } from '../../hooks/useAuthModal'
 import { becomeHost, getMe } from '../../apis/user/user'
 import { ConfirmModal } from '../ConfirmModal/ConfirmModal'
+import { useToast } from '../../hooks/useToast'
 
 export function Header() {
+  const { showToast } = useToast()
   const { isAuthenticated, isLoading, user, setUser } = useAuth()
   const { openAuthModal } = useAuthModal()
   const [isUpdatingRole, setIsUpdatingRole] = useState(false)
@@ -25,7 +27,10 @@ async function confirmBecomeHost() {
     const updatedUser = await getMe()
     setUser(updatedUser)
     setShowHostConfirm(false)
+    showToast('Role updated!', { variant: 'success' })
   } catch (err) {
+    const message = err instanceof Error ? err.message : 'An unexpected error occurred'
+    showToast(message, { variant: 'error' })
     console.error('Failed to update role', err)
   } finally {
     setIsUpdatingRole(false)

@@ -4,6 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { MdCottage } from "react-icons/md";
 import { useAuth } from "../../hooks/useAuth";
 import { useAuthModal } from "../../hooks/useAuthModal";
+import { useToast } from "../../hooks/useToast";
 import {
   sendOtp,
   verifyOtp,
@@ -19,6 +20,7 @@ type Step = "email" | "otp" | "name";
 export function AuthModal() {
   const { isOpen, closeAuthModal } = useAuthModal();
   const { setIsAuthenticated, setUser } = useAuth();
+  const { showToast } = useToast();
 
   const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
@@ -36,20 +38,25 @@ export function AuthModal() {
 
       try {
         await googleLogin(code);
-        const me = await getMe()
-        setUser(me)
-        setIsAuthenticated(true)
+        const me = await getMe();
+        setUser(me);
+        setIsAuthenticated(true);
+        showToast('Signed in with Google.', { variant: 'success' });
 
         resetAndClose();
       } catch (err) {
-        setError("Google login failed. Please try again.");
+        const message = err instanceof Error ? err.message : 'An unexpected error occurred';
+        setError(message);
+        showToast(message, { variant: 'error' });
         console.error(err);
       } finally {
         setIsSubmitting(false);
       }
     },
     onError: () => {
-      setError("Google login failed. Please try again.");
+      const message = 'Google login failed. Please try again.';
+      setError(message);
+      showToast(message, { variant: 'error' });
     },
   });
 
@@ -77,8 +84,11 @@ export function AuthModal() {
     try {
       await sendOtp({ email });
       setStep("otp");
+      showToast('OTP sent to your email.', { variant: 'success' });
     } catch (err) {
-      setError("Could not send OTP. Please try again.");
+      const message = err instanceof Error ? err.message : 'An unexpected error occurred';
+      setError(message);
+      showToast(message, { variant: 'error' });
       console.error(err);
     } finally {
       setIsSubmitting(false);
@@ -99,16 +109,20 @@ export function AuthModal() {
 
       if (result.userExists) {
         await login({ email });
-        const me = await getMe()
-        setUser(me)
-        setIsAuthenticated(true)
+        const me = await getMe();
+        setUser(me);
+        setIsAuthenticated(true);
+        showToast('Welcome back.', { variant: 'success' });
 
         resetAndClose();
       } else {
         setStep("name");
+        showToast('OTP verified. Continue with your name.', { variant: 'success' });
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Verification failed. Please try again.");
+      const message = err instanceof Error ? err.message : 'An unexpected error occurred';
+      setError(message);
+      showToast(message, { variant: 'error' });
       console.error(err);
     } finally {
       setIsSubmitting(false);
@@ -126,12 +140,15 @@ export function AuthModal() {
 
     try {
       await Register({ email, firstName, lastName });
-      const me = await getMe()
-      setUser(me)
-      setIsAuthenticated(true)
+      const me = await getMe();
+      setUser(me);
+      setIsAuthenticated(true);
+      showToast('Registration complete.', { variant: 'success' });
       resetAndClose();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Registration failed. Please try again.");
+      const message = err instanceof Error ? err.message : 'An unexpected error occurred';
+      setError(message);
+      showToast(message, { variant: 'error' });
       console.error(err);
     } finally {
       setIsSubmitting(false);
